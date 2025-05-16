@@ -1,0 +1,35 @@
+# --- Node.js / React ---
+node_modules/
+build/
+dist/
+.env
+
+# --- Python / Django ---
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+.venv/
+venv/
+env/
+backEnv/
+
+# --- IDEs y Sistemas ---
+.vscode/
+.idea/
+.DS_Store
+*.swp
+Thumbs.db
+
+# --- Git ---
+*.orig
+
+# --- Static files (si usas collectstatic) ---
+staticfiles/

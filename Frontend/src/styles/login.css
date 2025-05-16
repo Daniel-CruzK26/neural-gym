@@ -1,0 +1,80 @@
+/* Fondo general */
+.login-container {
+  background-color: #daf0fd;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja del login */
+.login-box {
+  background-color: #b6d1f8;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Título */
+.login-box h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 50px;
+  color: #000;
+}
+
+/* Campos de entrada */
+.login-box input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  margin: 15px 0;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Botón */
+.login-box button {
+  background-color: #4E869A;
+  color: white;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 14px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #4a6d82;
+}
+
+/* Enlace de recuperar contraseña */
+.login-box a {
+  display: block;
+  margin-top: 15px;
+  font-size: 15px;
+  color: #1b3c5d;
+  text-decoration: underline;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+  

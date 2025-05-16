@@ -1,0 +1,58 @@
+.header {
+    background-color: #daf0fd;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    height: 38px;
+    margin-right: 5px;
+  }
+  
+  .brand {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .nav a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .register-button {
+    background-color: #b6d1f8;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .register-button:hover {
+    background-color: #9ac0f6;
+    color: #000000;
+  }
+  

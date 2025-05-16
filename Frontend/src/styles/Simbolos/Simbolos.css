@@ -1,0 +1,145 @@
+.simbols-wrapper {
+  background-color: #e0f0ff;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 83vh;
+  padding: 2rem 0rem;
+  text-align: center;
+}
+
+.objetive {
+  background-color: #7a9ed1;
+  display: flex;
+  flex-direction: row;
+  width: 350px;
+  height: 100px;
+  padding: 8px 5px;
+  border-radius: 25px;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3rem;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.objetive.correcto {
+  box-shadow: 0px 0px 50px #1fae17;
+  animation: pulse 0.5s;
+}
+
+.objetive.incorrecto {
+  box-shadow: 0 0 50px #ee180c;
+  animation: shake 0.5s; /* ← Aquí activamos la animación */
+}
+
+.objetive h3 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: bold;
+  color: black;
+  max-width: 300px;
+  max-height: 219px;
+}
+
+.grid-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 95vw;
+  height: 310px;
+  gap: 30px 50px;
+}
+
+.option {
+  background: rgba(182, 209, 248, 0.7);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  width: 235px;
+  height: 150px;
+  padding: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.option h3 {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.option:hover {
+  transform: scale(1.05);
+}
+
+.option.seleccionada {
+  box-shadow: 0 0 12px #3f7bdd;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(8px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
