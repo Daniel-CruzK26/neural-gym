@@ -6,6 +6,7 @@ import PuzzlePage from "./pages/puzzlesVisualesGame";
 import StoopPage from "./pages/StoopGamePage";
 import MeaningPage from "./pages/MeaningPage";
 import SimbolosPage from "./pages/SimbolosPage";
+import MainMenu from "./pages/mainMenu";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route
             exact
             path="/"
-            component={() => <h1>Bienvenido a NeuralGym</h1>}
+            element={() => <h1>Bienvenido a NeuralGym</h1>}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -24,6 +25,7 @@ function App() {
           <Route path="/StoopTest" element={<StoopPage />} />
           <Route path="/MeaningTest" element={<MeaningPage />} />
           <Route path="/SimbolsTest" element={<SimbolosPage />}></Route>
+          <Route path="/main-menu" element={<MainMenu />}></Route>
         </Routes>
       </div>
     </Router>
