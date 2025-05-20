@@ -19,6 +19,7 @@ urlpatterns = [
     path('stoop/', include('apps.Stoop.routers')),
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
+    path('pruebas/', include('apps.Pruebas.urls'))
 ]
 
 if settings.DEBUG:

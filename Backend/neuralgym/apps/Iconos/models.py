@@ -5,3 +5,6 @@ class Icono(models.Model):
     nombre = models.CharField(max_length = 100)
     archivo = models.FileField(upload_to='iconos/')
     categoria = models.CharField(max_length=50, choices=[('figura', 'Figura'), ('numero', 'Número'), ('extras', 'Extras')], null=True, blank=True)
+    
+    def __str__(self) -> str:
+        return self.nombre

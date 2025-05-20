@@ -1,7 +1,13 @@
 from rest_framework import serializers
-from .models import Prueba
+from .models import Prueba, PuntajePruebas
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Prueba
         fields = ['id', 'name', 'categoria', 'game_url']
+        
+class ScoreSerializer(serializers.ModelSerializer):
+    prueba = serializers.CharField(source='prueba.name')
+    class Meta:
+        model = PuntajePruebas
+        fields=['prueba', 'score']
