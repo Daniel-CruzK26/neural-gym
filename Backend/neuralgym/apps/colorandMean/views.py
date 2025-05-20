@@ -68,5 +68,4 @@ colores = {
     'CAFE': '#9E6A20',
     'NARANJA': '#FF8811',
     'LILA': '#A475F7',
-    'AQUA': '#79FADB'
 }
