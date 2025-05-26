@@ -18,7 +18,7 @@ const GameCard = ({ descBreve, imgURL }) => {
           variants={{
             rest: { filter: "blur(0px) brightness(100%)" },
             hover: {
-              filter: "blur(4px) brightness(89%)",
+              filter: "blur(4px) brightness(85%)",
               transition: { duration: 0.3 },
             },
           }}

@@ -19,7 +19,7 @@ function MainMenu() {
       .then((res) => res.json())
       .then((data) => setPruebas(data))
       .catch((error) => console.error("Error al obtener las pruebas", error));
-  });
+  }, []);
 
   return (
     <div className="container">
