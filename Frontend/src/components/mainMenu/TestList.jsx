@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/mainMenu/TestList.css";
-import GameCard from "./gameCard";
+import GameCard from "./GameCard";
 
 const TestList = ({ pruebas, categoria }) => {
   return (
@@ -11,7 +11,11 @@ const TestList = ({ pruebas, categoria }) => {
         {pruebas.map((prueba) => (
           <div className="game">
             <Link to={prueba.game_url} key={prueba.id}>
-              <GameCard name={prueba.name} key={prueba.id} />
+              <GameCard
+                descBreve={prueba.descrp_breve}
+                imgURL={prueba.image}
+                key={prueba.id}
+              />
             </Link>
             <h4>{prueba.name}</h4>
           </div>

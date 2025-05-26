@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import "../../styles/mainMenu/gameCard.css";
 
-const GameCard = ({ name }) => {
+const GameCard = ({ descBreve, imgURL }) => {
   return (
     <motion.div
       className="game-card"
@@ -12,13 +12,13 @@ const GameCard = ({ name }) => {
     >
       <motion.div className="img-container">
         <motion.img
-          src="https://picsum.photos/260/220"
+          src={`http://127.0.0.1:8000${imgURL}`}
           alt="Ejemplo"
           className="game-image"
           variants={{
             rest: { filter: "blur(0px) brightness(100%)" },
             hover: {
-              filter: "blur(4px) brightness(80%)",
+              filter: "blur(4px) brightness(89%)",
               transition: { duration: 0.3 },
             },
           }}
@@ -31,7 +31,7 @@ const GameCard = ({ name }) => {
             hover: { opacity: 1, transition: { duration: 0.4 } },
           }}
         >
-          ¡Texto sobre la imagen!
+          {descBreve}
         </motion.div>
       </motion.div>
     </motion.div>

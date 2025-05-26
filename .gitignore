@@ -7,14 +7,12 @@ dist/
 # --- Python / Django ---
 __pycache__/
 *.py[cod]
-*.sqlite3
-db.sqlite3
+
 *.log
 *.pot
 *.pyc
 *.pyo
 *.pyd
-*.db
 .env
 .venv/
 venv/
