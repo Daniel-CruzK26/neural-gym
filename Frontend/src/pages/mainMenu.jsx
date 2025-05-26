@@ -1,32 +1,45 @@
 import "../styles/mainMenu.css";
-import TestList from "../components/TestList";
+import TestList from "../components/mainMenu/TestList";
+import SideBar from "../components/mainMenu/SideBar";
+import { React, useState, useEffect } from "react";
 
-function mainMenu() {
+function MainMenu() {
+  const [categorias, setCategorias] = useState([
+    "Atención",
+    "Memoria",
+    "Razonamiento",
+  ]);
+  const [pruebas, setPruebas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/pruebas/actividades/", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setPruebas(data))
+      .catch((error) => console.error("Error al obtener las pruebas", error));
+  });
+
   return (
     <div className="container">
-      <aside className="sidebar">
-        <div className="header">
-          <img src="logo.jpg" alt="Logo de NeuralGym" className="logo" />
-          <span className="title">NeuralGym</span>
-        </div>
-        <nav className="menu">
-          <button className="menu-button">
-            <span className="icon">👤</span> Perfil
-          </button>
-          <button className="menu-button">
-            <span className="icon">📈</span> Estadísticas
-          </button>
-          <button button className="menu-button">
-            <span className="icon">🚪</span> Cerrar sesión
-          </button>
-        </nav>
-      </aside>
-
+      <SideBar />
       <main className="main-content">
-        <TestList />
+        {categorias.map((category) => {
+          const pruebasXcategory = pruebas.filter(
+            (item) => item.categoria === category
+          );
+          return (
+            <TestList
+              key={category}
+              pruebas={pruebasXcategory}
+              categoria={category}
+            />
+          );
+        })}
       </main>
     </div>
   );
 }
 
-export default mainMenu;
+export default MainMenu;
