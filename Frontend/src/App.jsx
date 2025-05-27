@@ -1,7 +1,6 @@
 import "./App.css";
 import Login from "./components/login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Register from "./components/register";
 import PuzzlePage from "./pages/puzzlesVisualesGame";
 import StoopPage from "./pages/StoopGamePage";
@@ -13,16 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navegación temporal */}
-        <nav style={{ marginBottom: '20px' }}>
-          <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
-          <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>
-          <Link to="/puzzles" style={{ marginRight: '10px' }}>Puzzles</Link>
-          <Link to="/StoopTest" style={{ marginRight: '10px' }}>Stroop Test</Link>
-          <Link to="/MeaningTest" style={{ marginRight: '10px' }}>Meaning Test</Link>
-          <Link to="/SimbolsTest">Símbolos</Link>
-        </nav>
-
+        {/* Aquí definimos las rutas de nuestras pantallas*/}
         <Routes>
           <Route
             exact
