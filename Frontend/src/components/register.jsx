@@ -1,48 +1,54 @@
 import React, { useState } from 'react';
-import '../styles/register.css'; 
+import '../styles/register.css';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
+    setSuccess('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const { email, username, password, confirmPassword } = formData;
+
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError('Las contraseñas no coinciden');
       return;
     }
 
-    const data = {
-      email,
-      username,
-      password,
-      password2: confirmPassword, // Django espera 'password2'
-    };
+    const data = { email, username, password, password2: confirmPassword };
 
-    fetch('http://localhost:8000/register/', { // Asegúrate que este sea el puerto del backend
+    fetch('http://localhost:8000/register/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          return response.json().then((data) => {
-            const errors = Object.values(data).flat().join(' ');
-            throw new Error(errors);
-          });
+          const data = await response.json();
+          const errorText = Object.values(data).flat().join(' ');
+          throw new Error(errorText);
         }
         return response.json();
       })
       .then(() => {
-        alert('Registro exitoso');
-        // Redireccionar si lo deseas, por ejemplo:
-        // window.location.href = "/login";
+        setSuccess('¡Registro exitoso!');
+        setFormData({ email: '', username: '', password: '', confirmPassword: '' });
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1500);
       })
       .catch((err) => {
         console.error('Error al registrar', err);
@@ -53,39 +59,46 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-box">
-        <h2>Regístrate</h2>
+        <h2>Crear cuenta</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
+            name="email"
             placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
           />
           <input
             type="text"
+            name="username"
             placeholder="Nombre de usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={formData.username}
+            onChange={handleChange}
             required
           />
           <input
             type="password"
+            name="password"
             placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
             required
           />
           <input
             type="password"
+            name="confirmPassword"
             placeholder="Confirmar contraseña"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required
           />
           <button type="submit">Registrarse</button>
-          {error && <p className="error-message">{error}</p>}
         </form>
+
+        {error && <p className="message error-message">{error}</p>}
+        {success && <p className="message success-message">{success}</p>}
+
         <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
     </div>
