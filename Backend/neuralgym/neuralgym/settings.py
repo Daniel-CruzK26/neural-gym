@@ -51,6 +51,7 @@ LOCAL_APPS = [
     'apps.colorandMean',
     'apps.Iconos',
     'apps.Simbolos',
+    'apps.Login2',
 ]
 
 THIRD_APPS = [
