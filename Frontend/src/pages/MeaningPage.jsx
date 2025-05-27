@@ -65,6 +65,7 @@ export default function MeaningPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        prueba="Meaning"
       />
       <MeaningTest
         ref={meamingRef}

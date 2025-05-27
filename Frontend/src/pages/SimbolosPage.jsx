@@ -60,6 +60,7 @@ export default function SimbolosPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        prueba="Simbolos"
       />
       <SimbolosTest
         ref={simbolref}

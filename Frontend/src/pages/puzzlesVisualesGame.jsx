@@ -54,7 +54,12 @@ export default function PuzzlePage() {
 
   return (
     <div className="app-container">
-      <GameHeader score={score} onTimeEnd={onTimeEnd} resetTimerSignal={resetTimerSignal}/>
+      <GameHeader
+        score={score}
+        onTimeEnd={onTimeEnd}
+        resetTimerSignal={resetTimerSignal}
+        prueba="Puzzles"
+      />
       <PuzzleVisualGame
         ref={puzzleRef}  // 🔥 pasa la referencia
         onCorrect={incrementarScore}

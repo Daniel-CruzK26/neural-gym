@@ -1,21 +1,48 @@
 import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import "../styles/utils/GameHeader.css";
 
-function GameHeader({ score = 0, onTimeEnd, resetTimerSignal }) {
+function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, prueba }) {
   const TIEMPO_INICIAL = 90;
   const [timeLeft, setTimeLeft] = useState(TIEMPO_INICIAL);
-  const timerRef = useRef(null); 
+  const timerRef = useRef(null);
+
+  const guardarScore = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/scores/",
+        {
+          score: score,
+          prueba: prueba,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("✅ Score enviado con éxito:", res.data);
+    } catch (err) {
+      console.error("❌ Error al enviar el score:", err);
+    }
+  };
+
+  // ✅ Esta función se llama cuando acaba el tiempo
+  const handleTimeEnd = () => {
+    guardarScore(); // guardar automáticamente
+    if (onTimeEnd) onTimeEnd(); // llamar también al callback externo
+  };
 
   const iniciarTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
+    if (timerRef.current) clearInterval(timerRef.current);
     setTimeLeft(TIEMPO_INICIAL);
+
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timerRef.current);
-          if (onTimeEnd) onTimeEnd();
+          handleTimeEnd(); // ✅ usar función unificada
           return 0;
         }
         return prev - 1;
@@ -24,13 +51,13 @@ function GameHeader({ score = 0, onTimeEnd, resetTimerSignal }) {
   };
 
   useEffect(() => {
-    iniciarTimer(); // iniciar al cargar
-    return () => clearInterval(timerRef.current); // limpiar al desmontar
+    iniciarTimer();
+    return () => clearInterval(timerRef.current);
   }, []);
 
   useEffect(() => {
     if (resetTimerSignal !== 0) {
-      iniciarTimer(); // 🔥 reiniciar al cambiar resetTimerSignal
+      iniciarTimer();
     }
   }, [resetTimerSignal]);
 
@@ -47,5 +74,3 @@ function GameHeader({ score = 0, onTimeEnd, resetTimerSignal }) {
 }
 
 export default GameHeader;
-
-

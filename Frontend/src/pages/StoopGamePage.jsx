@@ -89,6 +89,7 @@ export default function StoopPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        prueba="Stroop"
       />
       <StoopTest
         ref={stoopRef}

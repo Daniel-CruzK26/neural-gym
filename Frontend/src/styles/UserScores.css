@@ -1,0 +1,51 @@
+.user-scores-title {
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 2rem 0 1rem;
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-weight: 600;
+  color: #000;
+  margin-top: 1rem;
+}
+
+.score-table th,
+.score-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.score-table th {
+  background-color: #3a5f89;
+  color: white;
+}
+
+.score-table tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+
+.visible-table th,
+.visible-table td {
+  color: #111 !important;
+  background-color: #f9f9f9 !important;
+  border: 1px solid #ccc;
+}
+
+.visible-table th {
+  background-color: #3a5f89 !important;
+  color: white !important;
+}
+
+.visible-table {
+  color: #111 !important;
+  font-weight: 600;
+  background-color: white !important;
+}

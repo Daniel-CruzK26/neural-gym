@@ -10,7 +10,7 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch('http://localhost:8000/login/', {
+      const response = await fetch('http://localhost:8000/api/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const Login = () => {
       const data = await response.json();
   
       if (response.ok) {
-        localStorage.setItem('access', data.access);
+        localStorage.setItem('token', data.access);
         localStorage.setItem('refresh', data.refresh);
         alert('Inicio de sesión exitoso');
         console.log('Usuario:', data.user);

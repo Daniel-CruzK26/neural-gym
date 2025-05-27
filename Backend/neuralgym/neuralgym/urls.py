@@ -1,3 +1,4 @@
+from apps.Pruebas.views import ScoresListView
 from django.urls import re_path
 from rest_framework import permissions
 from django.contrib import admin
@@ -9,6 +10,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,7 +21,10 @@ urlpatterns = [
     path('stoop/', include('apps.Stoop.routers')),
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
-    path('pruebas/', include('apps.Pruebas.urls'))
+    path('pruebas/', include('apps.Pruebas.urls')),
+    path("api/scores/", ScoresListView.as_view(), name="listar-scores"),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 if settings.DEBUG:
