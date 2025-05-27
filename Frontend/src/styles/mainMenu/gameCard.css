@@ -1,0 +1,43 @@
+.game-card {
+  position: relative;
+  width: 260px;
+  height: 220px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.img-container {
+  padding: 0;
+  width: 260px;
+  height: 220px;
+}
+
+.game-image {
+  width: 260px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.game-card h3 {
+  margin-top: 5px;
+}
+
+.texto-superpuesto {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 220px;
+  padding: 13px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}

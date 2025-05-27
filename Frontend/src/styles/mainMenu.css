@@ -7,7 +7,6 @@
 
 body,
 html {
-  height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -18,84 +17,12 @@ html {
   overflow: hidden;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  min-width: 200px;
-  background-color: #bdd8ff;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  transition: all 0.3s ease;
-}
-
-/* Header del sidebar */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 40px;
-}
-
-.header span {
-  color: black;
-}
-
-.logo {
-  width: 45px;
-  height: 45px;
-  margin-right: 10px;
-}
-
-.title {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: white;
-  white-space: nowrap;
-}
-
-/* Menú */
-.menu {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.menu-button {
-  background: #daf0fd;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  cursor: pointer;
-  width: 100%;
-}
-
-.menu-button:hover {
-  background: #daf0fd;
-  transform: scale(1.03);
-}
-
-.icon {
-  margin-right: 10px;
-  font-size: 20px;
-}
-
 /* Contenido principal */
 .main-content {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   background-color: #daf0fd;
-  display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px;

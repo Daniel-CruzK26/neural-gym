@@ -14,6 +14,8 @@ class Prueba(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE, verbose_name = 'Categoria', null = True)
     tutorial = models.CharField('Tutorial de la prueba', max_length=350, blank = False, null = True)
     game_url = models.CharField('URL del juego', max_length =255, unique=True, blank =True, null = True)
+    descrp_breve = models.CharField('Breve descripción de la prueba', max_length = 255, unique=False, blank=True, null = True)
+    image = models.FileField(upload_to='imgPruebas/', blank=True, null=True)
     is_active = models.BooleanField(default = True)
     
     def __str__(self) -> str:

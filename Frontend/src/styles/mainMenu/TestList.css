@@ -1,0 +1,34 @@
+.test-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem;
+  width: 80vw;
+}
+
+.test-container h3 {
+  text-align: left;
+  padding: 0px 10px;
+  color: black;
+  opacity: 0.55;
+}
+
+.test-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem 3rem;
+  box-sizing: content-box;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.game h4 {
+  padding: 0px;
+  font-size: 16px;
+  color: black;
+  opacity: 0.8;
+}
