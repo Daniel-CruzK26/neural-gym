@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from apps.User.views import Login
+from apps.User.views import Login, RegisterView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -19,7 +19,8 @@ urlpatterns = [
     path('stoop/', include('apps.Stoop.routers')),
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
-    path('pruebas/', include('apps.Pruebas.urls'))
+    path('pruebas/', include('apps.Pruebas.urls')),
+    path('register/', RegisterView.as_view(), name='register')
 ]
 
 if settings.DEBUG:
