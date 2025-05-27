@@ -1,7 +1,7 @@
 /* Fondo general */
 .register-container {
   background-color: #daf0fd;
-  height: 100vh;
+  height: 88vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -15,8 +15,8 @@
   border-radius: 25px;
   text-align: center;
   width: 350px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  font-family: "Segoe UI", sans-serif;
 }
 
 /* Título */
@@ -40,12 +40,12 @@
   font-size: 14px;
   color: #000;
   outline: none;
-  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Botón */
 .register-box button {
-  background-color: #4E869A;
+  background-color: #4e869a;
   color: white;
   border: none;
   padding: 14px;
@@ -53,7 +53,7 @@
   border-radius: 14px;
   font-size: 18px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
@@ -76,4 +76,3 @@
   font-size: 14px;
   margin-top: 10px;
 }
-  

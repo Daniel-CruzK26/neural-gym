@@ -7,25 +7,23 @@ import StoopPage from "./pages/StoopGamePage";
 import MeaningPage from "./pages/MeaningPage";
 import SimbolosPage from "./pages/SimbolosPage";
 import MainMenu from "./pages/mainMenu";
+import NeuralGymHomePage from "./HomePage";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* Aquí definimos las rutas de nuestras pantallas*/}
+        {/* Definición de rutas */}
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={() => <h1>Bienvenido a NeuralGym</h1>}
-          />
+          {/* Ruta principal: componente o h1 directamente */}
+          <Route path="/" element={<NeuralGymHomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/puzzles" element={<PuzzlePage />} />
-          <Route path="/StoopTest" element={<StoopPage />} />
-          <Route path="/MeaningTest" element={<MeaningPage />} />
-          <Route path="/SimbolsTest" element={<SimbolosPage />}></Route>
-          <Route path="/main-menu" element={<MainMenu />}></Route>
+          <Route path="/stoop-test" element={<StoopPage />} />
+          <Route path="/meaning-test" element={<MeaningPage />} />
+          <Route path="/simbols-test" element={<SimbolosPage />} />
+          <Route path="/main-menu" element={<MainMenu />} />
         </Routes>
       </div>
     </Router>

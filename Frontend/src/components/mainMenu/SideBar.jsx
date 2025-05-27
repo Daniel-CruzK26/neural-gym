@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -21,10 +22,12 @@ const SideBar = () => {
         <button className="menu-button">
           <FontAwesomeIcon className="icon" icon={faChartBar} /> Estadísticas
         </button>
-        <button button className="menu-button">
-          <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} />
-          Cerrar sesión
-        </button>
+        <Link to="/">
+          <button button className="menu-button">
+            <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} />
+            Cerrar sesión
+          </button>
+        </Link>
       </nav>
     </aside>
   );

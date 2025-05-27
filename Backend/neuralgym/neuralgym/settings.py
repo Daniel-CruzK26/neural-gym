@@ -51,6 +51,9 @@ LOCAL_APPS = [
     'apps.colorandMean',
     'apps.Iconos',
     'apps.Simbolos',
+    'apps.TOVA',
+    'apps.Digitos',
+    'apps.NumsyLetras',
 ]
 
 THIRD_APPS = [
