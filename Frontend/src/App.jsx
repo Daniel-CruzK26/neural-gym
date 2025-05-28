@@ -14,16 +14,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navegación temporal */}
-        <nav style={{ marginBottom: '20px' }}>
-          <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
-          <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>
-          <Link to="/puzzles" style={{ marginRight: '10px' }}>Puzzles</Link>
-          <Link to="/StoopTest" style={{ marginRight: '10px' }}>Stroop Test</Link>
-          <Link to="/MeaningTest" style={{ marginRight: '10px' }}>Meaning Test</Link>
-          <Link to="/SimbolsTest">Símbolos</Link>
-        </nav>
-
         <Routes>
           {/* Ruta principal: componente o h1 directamente */}
           <Route path="/" element={<NeuralGymHomePage />} />
