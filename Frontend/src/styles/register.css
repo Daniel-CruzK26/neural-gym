@@ -1,7 +1,9 @@
 /* Fondo general */
 .register-container {
-  background: linear-gradient(to right, #d9f0ff, #aed2f5);
-  height: 100vh;
+  background-image: linear-gradient(to right, #daf0fd, #b6d6f7);
+  background-size: 300% 100%;
+  background-position: 0% 0%;
+  height: 88vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -16,12 +18,12 @@
   text-align: center;
   width: 360px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 /* Título */
 .register-box h2 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 30px;
   color: #2a2a2a;
@@ -31,7 +33,7 @@
 .register-box input {
   display: block;
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 16px;
   margin: 12px 0;
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -49,6 +51,7 @@
 
 /* Botón */
 .register-box button {
+  margin-top: 18px;
   background-color: #4e869a;
   color: white;
   border: none;
@@ -64,15 +67,6 @@
 
 .register-box button:hover {
   background-color: #3d6e83;
-}
-
-/* Enlace */
-.register-box a {
-  display: block;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #2e5c87;
-  text-decoration: underline;
 }
 
 /* Mensajes */
@@ -98,6 +92,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

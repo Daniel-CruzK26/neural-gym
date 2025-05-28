@@ -1,6 +1,6 @@
 /* src/style.css */
 :root {
-  --main-bg: #dbf5ff;
+  --main-bg: #daf0fd;
   --info-bg: #bee3f8;
   --card-bg: #b2f1ea;
   --radius: 1rem;
@@ -23,8 +23,10 @@ body {
 
 .main {
   width: 100vw;
-  height: 80vh;
-  background-color: var(--main-bg);
+  height: 88vh;
+  background-image: linear-gradient(to right, #daf0fd, #b6d6f7);
+  background-size: 300% 100%;
+  background-position: 0% 0%;
   padding: 3rem 4rem;
 }
 
