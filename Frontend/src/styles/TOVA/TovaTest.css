@@ -1,0 +1,53 @@
+.tova-wrapper {
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.num-objetive {
+  color: black;
+  font-size: 50px;
+}
+
+.number-display {
+  width: 380px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #cfcf12;
+}
+
+.number {
+  font-size: 180px;
+  color: black;
+}
+
+.number-display.showing {
+  background-color: #74c6e4;
+}
+
+.number-display.waiting {
+  background-color: #cfcf12;
+}
+
+.number-display.correcto {
+  background-color: #1fae17;
+}
+
+.number-display.incorrecto {
+  background-color: #ee180c;
+}
+
+.btn-action {
+  width: 380px;
+  height: 90px;
+  border-radius: 40px;
+  box-shadow: 1px 1px 6px rgb(0, 0, 0, 0.8);
+  background-color: #b2f1ea;
+}

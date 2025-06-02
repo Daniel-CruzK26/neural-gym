@@ -7,6 +7,7 @@ import PuzzlePage from "./pages/puzzlesVisualesGame";
 import StoopPage from "./pages/StoopGamePage";
 import MeaningPage from "./pages/MeaningPage";
 import SimbolosPage from "./pages/SimbolosPage";
+import TovaPage from "./pages/TovaPage";
 import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/stoop-test" element={<StoopPage />} />
           <Route path="/meaning-test" element={<MeaningPage />} />
           <Route path="/simbols-test" element={<SimbolosPage />} />
+          <Route path="/tova-test" element={<TovaPage />}></Route>
           <Route path="/main-menu" element={<MainMenu />} />
         </Routes>
       </div>
