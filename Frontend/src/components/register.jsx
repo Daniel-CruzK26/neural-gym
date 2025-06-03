@@ -53,7 +53,10 @@ const Register = () => {
           confirmPassword: "",
         });
         setTimeout(() => {
-          window.location.href = "/login";
+          localStorage.setItem("access", data.token);
+          localStorage.setItem("refresh", data["refresh-token"]);
+          console.log("Usuario:", data.user);
+          window.location.href = "/main-menu";
         }, 1500);
       })
       .catch((err) => {

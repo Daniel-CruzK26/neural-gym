@@ -22,10 +22,10 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("access", data.access);
-        localStorage.setItem("refresh", data.refresh);
-        alert("Inicio de sesión exitoso");
+        localStorage.setItem("access", data.token);
+        localStorage.setItem("refresh", data["refresh-token"]);
         console.log("Usuario:", data.user);
+        window.location.href = "/main-menu";
       } else {
         setError(data.detail || "Correo o contraseña incorrectos");
       }
