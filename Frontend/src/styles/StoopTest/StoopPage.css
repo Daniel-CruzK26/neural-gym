@@ -1,10 +1,10 @@
-.app-container {
+.app-container-stoop {
   margin: 0;
   padding: 0;
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #e0f0ff;
+  background: linear-gradient(180deg, #ffe6e6, #fccece);
 }
 
 .overlay {

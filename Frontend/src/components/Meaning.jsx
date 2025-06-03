@@ -95,7 +95,7 @@ const MeaningTest = forwardRef(
 
     return (
       <div className="meaning-wrapper">
-        <div className={`objetive ${estadoRespuesta}`}>
+        <div className={`objetive-meanings ${estadoRespuesta}`}>
           <h5>{pruebaActual.objetivo}</h5>
           <h3 style={{ color: pruebaActual.hex }}>{pruebaActual.word}</h3>
         </div>
@@ -103,7 +103,7 @@ const MeaningTest = forwardRef(
         <div className="grid-options fade-in">
           {opciones.map((opc, i) => (
             <div
-              className={`option ${
+              className={`option-meanings ${
                 seleccionada.includes(i) ? "seleccionada" : ""
               }`}
               key={i}

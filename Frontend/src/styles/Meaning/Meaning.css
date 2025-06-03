@@ -10,42 +10,43 @@
   text-align: center;
 }
 
-.objetive {
-  background-color: #7a9ed1;
+.objetive-meanings {
+  background: rgba(191, 208, 231, 0);
+  box-sizing: content-box;
   display: flex;
   flex-direction: column;
   width: 330px;
   height: 85px;
-  padding: 8px 5px;
+  padding: 10px 5px;
   border-radius: 25px;
   justify-content: center;
   align-items: center;
   margin-bottom: 3rem;
   margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.3s ease;
 }
 
-.objetive.correcto {
+.objetive-meanings.correcto {
   box-shadow: 0px 0px 50px #1fae17;
   animation: pulse 0.5s;
 }
 
-.objetive.incorrecto {
+.objetive-meanings.incorrecto {
   box-shadow: 0 0 50px #ee180c;
   animation: shake 0.5s; /* ← Aquí activamos la animación */
 }
 
-.objetive h3 {
+.objetive-meanings h3 {
   margin: 0;
-  font-size: 48px;
+  font-size: 45px;
   font-weight: bold;
-  max-width: 300px;
-  max-height: 219px;
 }
 
-.objetive h5 {
+.objetive-meanings h5 {
+  font-size: 20px;
   margin: 0;
+  color: #000;
 }
 
 .grid-options {
@@ -57,26 +58,26 @@
   gap: 30px 50px;
 }
 
-.option {
-  background: rgba(182, 209, 248, 0.7);
+.option-meanings {
+  background: rgba(182, 209, 248, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   border-radius: 1rem;
   width: 235px;
-  height: 150px;
+  height: 160px;
   padding: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: transform 0.3s;
 }
 
-.option:hover {
+.option-meanings:hover {
   transform: scale(1.05);
 }
 
-.option.seleccionada {
+.option-meanings.seleccionada {
   box-shadow: 0 0 12px #3f7bdd;
 }
 

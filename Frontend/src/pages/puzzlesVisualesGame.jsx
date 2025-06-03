@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import PuzzleVisualGame from "../components/puzzlesVisuales";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
-import '../styles/PuzzlesVisuales/PuzzlesPage.css'
+import "../styles/PuzzlesVisuales/PuzzlesPage.css";
 
 export default function PuzzlePage() {
   const [score, setScore] = useState(0);
@@ -11,7 +11,7 @@ export default function PuzzlePage() {
   const [causaFinalizacion, setCausaFinalizacion] = useState("");
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
 
-  const puzzleRef = useRef(); 
+  const puzzleRef = useRef();
 
   const incrementarScore = () => setScore((prev) => prev + 1);
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
@@ -42,9 +42,9 @@ export default function PuzzlePage() {
         setScore(0);
         setTiempos([]);
         setShowResultados(false);
-        setResetTimerSignal(prev => prev + 1);
+        setResetTimerSignal((prev) => prev + 1);
         if (puzzleRef.current) {
-          puzzleRef.current.reiniciarPuzzle();  // 🔥 recargar el primer puzzle automáticamente
+          puzzleRef.current.reiniciarPuzzle(); // 🔥 recargar el primer puzzle automáticamente
         }
       })
       .catch((error) => {
@@ -53,10 +53,14 @@ export default function PuzzlePage() {
   };
 
   return (
-    <div className="app-container">
-      <GameHeader score={score} onTimeEnd={onTimeEnd} resetTimerSignal={resetTimerSignal}/>
+    <div className="app-container-puzzles">
+      <GameHeader
+        score={score}
+        onTimeEnd={onTimeEnd}
+        resetTimerSignal={resetTimerSignal}
+      />
       <PuzzleVisualGame
-        ref={puzzleRef}  // 🔥 pasa la referencia
+        ref={puzzleRef} // 🔥 pasa la referencia
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onPuzzlesCompletados={onPuzzlesCompletados}
@@ -75,4 +79,3 @@ export default function PuzzlePage() {
     </div>
   );
 }
-

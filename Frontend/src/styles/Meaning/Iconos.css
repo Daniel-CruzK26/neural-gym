@@ -1,13 +1,13 @@
 .icono-container {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .icono-container svg {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icono-container svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

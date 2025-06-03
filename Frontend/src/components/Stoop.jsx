@@ -1,99 +1,117 @@
-import React, {useImperativeHandle, useRef, useState, forwardRef, useEffect} from "react";
-import "../styles/StoopTest/Stoop.css"
+import React, {
+  useImperativeHandle,
+  useRef,
+  useState,
+  forwardRef,
+  useEffect,
+} from "react";
+import "../styles/StoopTest/Stoop.css";
 
-const StoopTest = forwardRef(({onCorrect, onRespuestaMedida, onIncorrect}, ref) => {
-    const [game, setGame] = useState({nombre_color: "", color_objetivo: "", hex: "", opciones: []});
+const StoopTest = forwardRef(
+  ({ onCorrect, onRespuestaMedida, onIncorrect }, ref) => {
+    const [game, setGame] = useState({
+      nombre_color: "",
+      color_objetivo: "",
+      hex: "",
+      opciones: [],
+    });
     const [seleccionada, setSeleccionada] = useState("");
     const [opciones, setOpciones] = useState([]);
     const [estadoRespuesta, setEstadoRespuesta] = useState("");
     const [tiempoInicio, setTiempoInicio] = useState(Date.now());
 
     const obtenerTest = (nivelAct) => {
-        fetch("http://127.0.0.1:8000/stoop/getTest/", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include', 
-            body: JSON.stringify({ nivel: nivelAct }),
-        })
+      fetch("http://127.0.0.1:8000/stoop/getTest/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ nivel: nivelAct }),
+      })
         .then((res) => res.json())
         .then((data) => {
-            setGame(data);
-            setOpciones(data.opciones);
-            setSeleccionada([]);
-            setTiempoInicio(Date.now());
+          setGame(data);
+          setOpciones(data.opciones);
+          setSeleccionada([]);
+          setTiempoInicio(Date.now());
         })
         .catch((error) => {
-            console.error('Error al obtener el test', error)
+          console.error("Error al obtener el test", error);
         });
     };
 
     const obtenerNewTest = () => {
-        fetch('http://127.0.0.1:8000/stoop/generarPrueba/', {method: 'GET', credentials: 'include'})
+      fetch("http://127.0.0.1:8000/stoop/generarPrueba/", {
+        method: "GET",
+        credentials: "include",
+      })
         .then((res) => res.json())
         .then((data) => {
-            setGame(data);
-            setTiempoInicio(Date.now());
+          setGame(data);
+          setTiempoInicio(Date.now());
         })
         .catch((error) => {
-            console.error('Error al obtener nuevo test', error);
+          console.error("Error al obtener nuevo test", error);
         });
     };
 
     useEffect(() => {
-        obtenerTest(1); 
+      obtenerTest(1);
     }, []);
 
     useImperativeHandle(ref, () => ({
-        reiniciarPrueba() {
-            obtenerTest(1);
-        },
-        pasarNivel(nivelAct) {
-            obtenerTest(nivelAct);
-        },
+      reiniciarPrueba() {
+        obtenerTest(1);
+      },
+      pasarNivel(nivelAct) {
+        obtenerTest(nivelAct);
+      },
     }));
-    
-    const toggleSeleccion = (name, index) =>{
-        const tiempoRespuesta = Date.now() - tiempoInicio;
-        onRespuestaMedida?.(tiempoRespuesta)
-        setSeleccionada([index])
 
-        if (name === game.color_objetivo) {
-            onCorrect?.();
-            setEstadoRespuesta('correcto');
-        }else {
-            setEstadoRespuesta('incorrecto');
-            onIncorrect?.();
-        }
+    const toggleSeleccion = (name, index) => {
+      const tiempoRespuesta = Date.now() - tiempoInicio;
+      onRespuestaMedida?.(tiempoRespuesta);
+      setSeleccionada([index]);
 
-        setTimeout(() => {
-            setSeleccionada([]);
-            setEstadoRespuesta('');
-            obtenerNewTest();
-        }, 800);
+      if (name === game.color_objetivo) {
+        onCorrect?.();
+        setEstadoRespuesta("correcto");
+      } else {
+        setEstadoRespuesta("incorrecto");
+        onIncorrect?.();
+      }
+
+      setTimeout(() => {
+        setSeleccionada([]);
+        setEstadoRespuesta("");
+        obtenerNewTest();
+      }, 800);
     };
 
     return (
-        <div className="stoop-wrapper">
-          <div className={`name-color ${estadoRespuesta}`}>
-            <h3 style={{ color: game.hex }}>{game.nombre_color}</h3>
-          </div>
-      
-          <div className="grid-options fade-in">
-            {opciones.map((opc, i) => (
-              <div
-                className={`option ${seleccionada.includes(i) ? "seleccionada" : ""}`}
-                key={i}
-                onClick={() => toggleSeleccion(opc[0], i)} 
-                style={{ backgroundColor: opc[1] }}
-              >
-                <h4 style={{ color: opc[2] }}>{opc[0]}</h4>
-              </div>
-            ))}
-          </div>
+      <div className="stoop-wrapper">
+        <div className={`name-color ${estadoRespuesta}`}>
+          <h3 style={{ color: game.hex }}>{game.nombre_color}</h3>
         </div>
-      );
-});
 
-export default StoopTest
+        <div className="grid-options fade-in">
+          {opciones.map((opc, i) => (
+            <div
+              className={`option-stoop ${
+                seleccionada.includes(i) ? "seleccionada" : ""
+              }`}
+              key={i}
+              onClick={() => toggleSeleccion(opc[0], i)}
+              style={{ backgroundColor: opc[1] }}
+            >
+              <h4 style={{ color: opc[2] }}>{opc[0]}</h4>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+);
+
+export default StoopTest;

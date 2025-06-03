@@ -84,7 +84,7 @@ export default function StoopPage() {
   }, [nivelActual]);
 
   return (
-    <div className="app-container">
+    <div className="app-container-stoop">
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}

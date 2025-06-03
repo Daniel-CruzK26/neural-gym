@@ -11,15 +11,15 @@
 }
 
 .name-color {
-  background-color: #7a9ed1;
+  background: rgba(191, 208, 231, 0);
   display: flex;
   width: 330px;
   height: 85px;
   padding: 5px;
-  border-radius: 25px;
+  border-radius: 55px;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   margin-bottom: 3rem;
   transition: box-shadow 0.3s ease;
 }
@@ -50,30 +50,30 @@
   gap: 10px 80px;
 }
 
-.option {
+.option-stoop {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   border-radius: 1rem;
-  width: 235px;
-  height: 100px;
+  width: 230px;
+  height: 110px;
   padding: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s;
 }
 
-.option h4 {
+.option-stoop h4 {
   font-size: 40px;
   font-weight: bold;
 }
 
-.option:hover {
+.option-stoop:hover {
   transform: scale(1.05);
 }
 
-.option.seleccionada {
+.option-stoop.seleccionada {
   box-shadow: 0 0 12px #3f7bdd;
 }
 

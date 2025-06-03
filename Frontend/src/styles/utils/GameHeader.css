@@ -1,16 +1,23 @@
+.game-header-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
 .game-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #a0c6fb; /* barra central */
+  background-color: rgb(233, 245, 255); /* barra central */
   padding: 8px 30px;
-  border-radius: 0;
-  height: 10vh;
-  width: 100vw;
+  border-radius: 50px;
+  height: 9vh;
+  width: 75vw;
   box-sizing: border-box;
-  position: relative;
   font-family: "Segoe UI", sans-serif;
-  color: white;
+  color: #333;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .game-header::before,
@@ -35,12 +42,10 @@
 }
 
 .score {
-  font-size: 36px;
-  background-color: #a0c6fb;
+  font-size: 35px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  line-height: 80px;
   text-align: center;
   font-weight: bold;
   position: absolute;
@@ -49,27 +54,31 @@
   z-index: 1;
 }
 
-.icon {
-  font-size: 28px;
-  background-color: #f4f4fb;
-  color: #5a8b9d;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  line-height: 40px;
+.score h5 {
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.icon-pause {
+  width: 50px;
+  height: 50px;
+  display: flex;
   text-align: center;
-  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+.icono-game-header {
+  margin-right: 0;
+  height: 40px;
+  color: #333;
 }
 
 .timer-alert {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 336px;
-}
-
-.pause {
-  margin-right: auto;
+  width: 300px;
 }
 
 .alert {
@@ -77,6 +86,7 @@
 }
 
 .timer {
-  font-size: 25px;
+  font-size: 1.5rem;
   font-weight: bold;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }

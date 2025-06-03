@@ -136,7 +136,7 @@ const SimbolosTest = forwardRef(
     }
     return (
       <div className="simbols-wrapper">
-        <div className={`objetive ${estadoRespuesta}`}>
+        <div className={`objetive-simbols ${estadoRespuesta}`}>
           {fails.includes(pruebaActual.nombre) ? (
             <>
               <IconoSVG

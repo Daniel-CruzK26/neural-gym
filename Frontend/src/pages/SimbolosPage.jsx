@@ -55,7 +55,7 @@ export default function SimbolosPage() {
   }, []);
 
   return (
-    <div className="app-container">
+    <div className="app-container-simbols">
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}

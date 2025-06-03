@@ -4,7 +4,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #e0f0ff;
+  background: linear-gradient(180deg, #fce9e9, #f5c3c3);
 }
 
 .overlay {

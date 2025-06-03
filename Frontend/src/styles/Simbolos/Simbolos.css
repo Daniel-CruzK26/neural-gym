@@ -10,33 +10,31 @@
   text-align: center;
 }
 
-.objetive {
-  background-color: #7a9ed1;
+.objetive-simbols {
   display: flex;
   flex-direction: row;
-  width: 350px;
+  width: 300px;
   height: 100px;
+  border-radius: 50px;
   padding: 8px 5px;
-  border-radius: 25px;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 3rem;
   margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
 
-.objetive.correcto {
+.objetive-simbols.correcto {
   box-shadow: 0px 0px 50px #1fae17;
   animation: pulse 0.5s;
 }
 
-.objetive.incorrecto {
+.objetive-simbols.incorrecto {
   box-shadow: 0 0 50px #ee180c;
   animation: shake 0.5s; /* ← Aquí activamos la animación */
 }
 
-.objetive h3 {
+.objetive-simbols h3 {
   margin: 0;
   font-size: 48px;
   font-weight: bold;

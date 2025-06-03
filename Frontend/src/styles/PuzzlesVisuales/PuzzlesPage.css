@@ -1,10 +1,10 @@
-.app-container {
+.app-container-puzzles {
   margin: 0;
   padding: 0;
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #e0f0ff;
+  background: linear-gradient(180deg, #ddf3ff, rgb(182, 218, 254));
 }
 
 .overlay {

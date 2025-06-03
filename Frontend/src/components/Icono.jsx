@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import "../styles/Meaning/Iconos.css"
+import React, { useEffect, useState } from "react";
+import "../styles/Meaning/Iconos.css";
 
 const IconoSVG = ({ url, color }) => {
   const [svgContent, setSvgContent] = useState("");
@@ -9,7 +9,7 @@ const IconoSVG = ({ url, color }) => {
     fetch(url)
       .then((res) => res.text())
       .then((svg) => {
-        console.log("Contenido SVG:", svg);  // 👈 revisa si llega vacío
+        console.log("Contenido SVG:", svg); // 👈 revisa si llega vacío
         setSvgContent(svg);
       });
   }, [url]);

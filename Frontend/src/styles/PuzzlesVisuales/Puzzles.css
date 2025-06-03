@@ -13,8 +13,8 @@
   width: 300px;
   height: 219px;
   box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem;
   transition: box-shadow 0.3s ease;
+  margin: 1.8rem;
 }
 
 .figura-base.correcto {
@@ -38,7 +38,7 @@
   flex-wrap: wrap;
   width: 920px;
   height: 410px;
-  gap: 50px 90px;
+  gap: 40px 90px;
 }
 
 .pieza {
