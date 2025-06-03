@@ -42,7 +42,7 @@
 }
 
 .pieza {
-  background: rgba(182, 209, 248, 0.7);
+  background-color: rgba(233, 245, 255, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +51,7 @@
   width: 245px;
   height: 170px;
   padding: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s;
 }

@@ -8,6 +8,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/mainMenu/sidebar.css";
 
+const handleLogout = () => {
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
+  window.location.href = "/main-menu";
+};
+
 const SideBar = () => {
   return (
     <aside className="sidebar">
@@ -22,12 +28,12 @@ const SideBar = () => {
         <button className="menu-button">
           <FontAwesomeIcon className="icon" icon={faChartBar} /> Estadísticas
         </button>
-        <Link to="/">
+        <form onSubmit={handleLogout}>
           <button button className="menu-button">
             <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} />
             Cerrar sesión
           </button>
-        </Link>
+          </form>
       </nav>
     </aside>
   );

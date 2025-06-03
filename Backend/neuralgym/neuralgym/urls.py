@@ -20,7 +20,8 @@ urlpatterns = [
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
     path('pruebas/', include('apps.Pruebas.urls')),
-    path('register/', RegisterView.as_view(), name='register')
+    path('register/', RegisterView.as_view(), name='register'),
+    path('api/', include('apps.User.urls'))
 ]
 
 if settings.DEBUG:

@@ -27,10 +27,10 @@ def niveles(nivel):
         hexs = [hex for _, hex in color_fondo.items()]
         font_color = color_letras
     elif nivel == 2:
-        hexs = ['#b6d1f8']*6
+        hexs = ['#e9f5ff4d']*6
         font_color = color_letras
     elif nivel == 1:
-        hexs = ['#b6d1f8']*6
+        hexs = ['#e9f5ff4d']*6
         font_color = ['#000000'] * 6
     
     random.shuffle(hexs)
