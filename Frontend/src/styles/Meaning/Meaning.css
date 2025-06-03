@@ -15,7 +15,7 @@
   box-sizing: content-box;
   display: flex;
   flex-direction: column;
-  width: 330px;
+  width: 350px;
   height: 85px;
   padding: 10px 5px;
   border-radius: 25px;
@@ -23,7 +23,6 @@
   align-items: center;
   margin-bottom: 3rem;
   margin-top: 10px;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.3s ease;
 }
 
@@ -39,12 +38,12 @@
 
 .objetive-meanings h3 {
   margin: 0;
-  font-size: 45px;
+  font-size: 50px;
   font-weight: bold;
 }
 
 .objetive-meanings h5 {
-  font-size: 20px;
+  font-size: 28px;
   margin: 0;
   color: #000;
 }
@@ -59,7 +58,7 @@
 }
 
 .option-meanings {
-  background: rgba(182, 209, 248, 0.6);
+  background-color: rgba(233, 245, 255, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +67,7 @@
   width: 235px;
   height: 160px;
   padding: 4px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s;
 }

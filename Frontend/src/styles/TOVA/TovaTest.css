@@ -20,7 +20,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  background-color: #cfcf12;
+  background-color: #fff714;
+  box-shadow: 1px 1px 8px rgb(0, 0, 0, 0.8);
 }
 
 .number {
@@ -33,15 +34,15 @@
 }
 
 .number-display.waiting {
-  background-color: #cfcf12;
+  background-color: #fff714;
 }
 
 .number-display.correcto {
-  background-color: #1fae17;
+  background-color: #38d10a;
 }
 
 .number-display.incorrecto {
-  background-color: #ee180c;
+  background-color: #f31d12;
 }
 
 .btn-action {
@@ -49,5 +50,12 @@
   height: 90px;
   border-radius: 40px;
   box-shadow: 1px 1px 6px rgb(0, 0, 0, 0.8);
-  background-color: #f97676;
+  background-color: rgb(203, 230, 252);
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-action:hover {
+  background-color: rgb(171, 214, 250);
+  transform: scale(1.03);
 }

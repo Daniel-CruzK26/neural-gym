@@ -19,7 +19,6 @@
   border-radius: 55px;
   justify-content: center;
   align-items: center;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   margin-bottom: 3rem;
   transition: box-shadow 0.3s ease;
 }
@@ -59,7 +58,7 @@
   width: 230px;
   height: 110px;
   padding: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.3s;
 }
