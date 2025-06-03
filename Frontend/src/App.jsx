@@ -10,6 +10,7 @@ import SimbolosPage from "./pages/SimbolosPage";
 import TovaPage from "./pages/TovaPage";
 import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -18,14 +19,49 @@ function App() {
         <Routes>
           {/* Ruta principal: componente o h1 directamente */}
           <Route path="/" element={<NeuralGymHomePage />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/puzzles" element={<PuzzlePage />} />
-          <Route path="/stoop-test" element={<StoopPage />} />
-          <Route path="/meaning-test" element={<MeaningPage />} />
-          <Route path="/simbols-test" element={<SimbolosPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/main-menu"
+            element={
+              <PrivateRoute>
+                <MainMenu />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/puzzles"
+            element={
+              <PrivateRoute>
+                <PuzzlePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/stoop-test"
+            element={
+              <PrivateRoute>
+                <StoopPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/meaning-test"
+            element={
+              <PrivateRoute>
+                <MeaningPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/simbols-test"
+            element={
+              <PrivateRoute>
+                <SimbolosPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="/tova-test" element={<TovaPage />}></Route>
-          <Route path="/main-menu" element={<MainMenu />} />
         </Routes>
       </div>
     </Router>
