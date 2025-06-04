@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import StoopTest from "../components/Stoop";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
@@ -13,6 +14,7 @@ export default function StoopPage() {
   const [incorrectSeguidos, setIncorrectos] = useState(0);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const navigate = useNavigate();
   const stoopRef = useRef();
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
 
@@ -126,7 +128,7 @@ export default function StoopPage() {
           <div className="pause-menu">
             <h2>Juego en Pausa</h2>
             <button onClick={() => setIsPaused(false)}>Reanudar</button>
-            <button onClick={() => window.location.reload()}>Salir</button>
+            <button onClick={() => navigate("/main-menu")}>Salir</button>
           </div>
         </div>
       )}
