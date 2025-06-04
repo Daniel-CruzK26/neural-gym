@@ -1,6 +1,5 @@
 import React, {
   useImperativeHandle,
-  useRef,
   useState,
   forwardRef,
   useEffect,
@@ -71,7 +70,7 @@ const StoopTest = forwardRef(
 
     const toggleSeleccion = (name, index) => {
       if (isPaused) return;
-      
+
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);

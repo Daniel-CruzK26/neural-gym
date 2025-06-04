@@ -1,10 +1,4 @@
-import React, {
-  useImperativeHandle,
-  useRef,
-  useState,
-  forwardRef,
-  useEffect,
-} from "react";
+import React, { useImperativeHandle, useState, forwardRef } from "react";
 import IconoSVG from "./Icono";
 import "../styles/Meaning/Meaning.css";
 
@@ -47,6 +41,7 @@ const MeaningTest = forwardRef(
     };
 
     const toggleSeleccion = (opc, index) => {
+      if (isPaused) return;
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);
