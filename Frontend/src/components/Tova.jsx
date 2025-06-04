@@ -8,7 +8,7 @@ import React, {
 import "../styles/TOVA/TovaTest.css";
 
 const TovaTest = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas }, ref) => {
+  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused }, ref) => {
     const [shownNumber, setShownNumber] = useState(0);
     const [numObj, setNumObj] = useState(0);
     const [estadoRespuesta, setEstadoRespuesta] = useState("");
@@ -33,6 +33,7 @@ const TovaTest = forwardRef(
     };
 
     const toggleSeleccion = () => {
+      if (isPaused) return;
       clearTimeout(timeoutIdRef.current);
       clickPushRef.current = true;
 

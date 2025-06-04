@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useRef, useState, forwardRef, useEffect } from "react";
 import '../styles/PuzzlesVisuales/Puzzles.css'
 
-const PuzzleVisualGame = forwardRef(({ onCorrect, onRespuestaMedida, onPuzzlesCompletados }, ref) => {
+const PuzzleVisualGame = forwardRef(({ onCorrect, onRespuestaMedida, onPuzzlesCompletados, isPaused }, ref) => {
   const [piezas, setPiezas] = useState({ figura_base: "", correctas: [], distractoras: [] });
   const [seleccionadas, setSeleccionadas] = useState([]);
   const [mezcladas, setMezcladas] = useState([]);
@@ -45,6 +45,7 @@ const PuzzleVisualGame = forwardRef(({ onCorrect, onRespuestaMedida, onPuzzlesCo
   }));
 
   const toggleSeleccion = (index) => {
+    if (isPaused) return;
     let nuevas;
 
     if (seleccionadas.includes(index)) {

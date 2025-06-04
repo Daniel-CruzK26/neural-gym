@@ -3,7 +3,7 @@ import IconoSVG from "./Icono";
 import "../styles/Meaning/Meaning.css";
 
 const MeaningTest = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas }, ref) => {
+  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused }, ref) => {
     const [pruebas, setPruebas] = useState([]);
     const [pruebaActual, setPruebaActual] = useState({
       objetivo: "",

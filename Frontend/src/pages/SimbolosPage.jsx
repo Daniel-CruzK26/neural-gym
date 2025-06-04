@@ -1,17 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";  // ✅ Importar hook para navegación
 import SimbolosTest from "../components/Simbolos";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
-import "../styles/Simbolos/SimbolosPage.css";
+import Pausa from "../components/Pausa";
+import "../styles/StoopTest/StoopPage.css";
 
 export default function SimbolosPage() {
+  const navigate = useNavigate();  // ✅ hook para navegación
   const [score, setScore] = useState(0);
   const [incorrectas, setIncorrectas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   const simbolref = useRef();
+
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
+  const incrementarScore = () => setScore((prev) => prev + 1);
+  const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
@@ -23,15 +31,9 @@ export default function SimbolosPage() {
     return (total / tiempos.length / 1000).toFixed(2);
   };
 
-  const incrementarScore = () => setScore((prev) => prev + 1);
-
-  const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
-
   const pasarNivel = () => {
-    if (incorrectas < 4) {
-      if (simbolref.current) {
-        simbolref.current.newOption();
-      }
+    if (incorrectas < 4 && simbolref.current) {
+      simbolref.current.newOption();
     }
     setIncorrectas(0);
   };
@@ -40,12 +42,22 @@ export default function SimbolosPage() {
     setScore(0);
     setIncorrectas(0);
     setTiempos([]);
+    setIsPaused(false);
     setShowResultados(false);
     setResetTimerSignal((prev) => prev + 1);
 
     if (simbolref.current) {
       simbolref.current.reiniciarPrueba();
     }
+  };
+
+  const handlePauseToggle = () => {
+    setIsPaused((prev) => !prev);
+  };
+
+  // Nueva función para regresar al menú principal
+  const volverMenuPrincipal = () => {
+    navigate("/main-menu");  // Cambia "/" por la ruta que sea tu menú principal
   };
 
   useEffect(() => {
@@ -60,14 +72,27 @@ export default function SimbolosPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        isPaused={isPaused}
+        onPauseToggle={handlePauseToggle}
       />
+
       <SimbolosTest
         ref={simbolref}
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onIncorrect={respIncorrecta}
         onFinPruebas={pasarNivel}
+        isPaused={isPaused}
       />
+
+      {isPaused && (
+        <div className="overlay">
+          <Pausa
+            onResume={() => setIsPaused(false)}
+            onExit={volverMenuPrincipal}
+          />
+        </div>
+      )}
 
       {showResultados && (
         <div className="overlay">

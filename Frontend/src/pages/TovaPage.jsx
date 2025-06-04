@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import GameHeader from "../components/GameHeader";
 import TovaTest from "../components/Tova";
 import Resultados from "../components/Resultados";
-import "../styles/TOVA/Tovapage.css";
+import "../styles/StoopTest/StoopPage.css"; // ✅ usamos el mismo CSS que Stoop
 
 export default function TovaPage() {
   const [score, setScore] = useState(0);
@@ -10,8 +11,14 @@ export default function TovaPage() {
   const [showResultados, setShowResultados] = useState(false);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
-  const tovaref = useRef();
+  const [isPaused, setIsPaused] = useState(false); // ✅ igual que en Stoop
+
+  const navigate = useNavigate();
+  const tovaRef = useRef();
+
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
+  const incrementarScore = () => setScore((prev) => prev + 1);
+  const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
@@ -23,15 +30,9 @@ export default function TovaPage() {
     return (total / tiempos.length / 1000).toFixed(2);
   };
 
-  const incrementarScore = () => setScore((prev) => prev + 1);
-
-  const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
-
   const pasarNivel = () => {
-    if (incorrectas < 4) {
-      if (tovaref.current) {
-        tovaref.current.newOption();
-      }
+    if (incorrectas < 4 && tovaRef.current) {
+      tovaRef.current.newOption();
     }
     setIncorrectas(0);
   };
@@ -40,35 +41,52 @@ export default function TovaPage() {
     setScore(0);
     setIncorrectas(0);
     setTiempos([]);
+    setIsPaused(false); // ✅ igual que en Stoop
     setShowResultados(false);
     setResetTimerSignal((prev) => prev + 1);
 
-    if (tovaref.current) {
-      tovaref.current.reiniciarPrueba();
+    if (tovaRef.current) {
+      tovaRef.current.reiniciarPrueba();
     }
   };
 
   useEffect(() => {
-    if (tovaref.current) {
-      tovaref.current.reiniciarPrueba();
+    if (tovaRef.current) {
+      tovaRef.current.reiniciarPrueba();
     }
   }, []);
 
   return (
-    <div className="tova-container">
+    <div className="app-container-stoop"> {/* ✅ mismo estilo que Stoop */}
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        isPaused={isPaused}
+        onPauseToggle={() => setIsPaused(true)} // ✅ mismo control
       />
 
-      <TovaTest
-        ref={tovaref}
-        onCorrect={incrementarScore}
-        onRespuestaMedida={agregarTiempoRespuesta}
-        onIncorrect={respIncorrecta}
-        onFinPruebas={pasarNivel}
-      />
+      {!isPaused && (
+        <TovaTest
+          ref={tovaRef}
+          onCorrect={incrementarScore}
+          onRespuestaMedida={agregarTiempoRespuesta}
+          onIncorrect={respIncorrecta}
+          onFinPruebas={pasarNivel}
+          isPaused={isPaused}
+        />
+      )}
+
+      {isPaused && (
+        <div className="overlay">
+          <div className="pause-menu">
+            <h2>Juego en Pausa</h2>
+            <button onClick={() => setIsPaused(false)}>Reanudar</button>
+            <button onClick={() => navigate("/main-menu")}>Salir</button> {/* ✅ */}
+          </div>
+        </div>
+      )}
+
       {showResultados && (
         <div className="overlay">
           <Resultados
