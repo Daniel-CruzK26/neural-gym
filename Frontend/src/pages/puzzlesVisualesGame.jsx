@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PuzzleVisualGame from "../components/puzzlesVisuales";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
+import { useNavigate } from "react-router-dom"; // ✅ Para navegar al menú principal
 import "../styles/PuzzlesVisuales/PuzzlesPage.css";
 
 export default function PuzzlePage() {
@@ -10,8 +11,10 @@ export default function PuzzlePage() {
   const [tiempos, setTiempos] = useState([]);
   const [causaFinalizacion, setCausaFinalizacion] = useState("");
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
+  const [isPaused, setPaused] = useState(false); // ✅ Estado para pausa
 
   const puzzleRef = useRef();
+  const navigate = useNavigate(); // ✅
 
   const incrementarScore = () => setScore((prev) => prev + 1);
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
@@ -42,14 +45,19 @@ export default function PuzzlePage() {
         setScore(0);
         setTiempos([]);
         setShowResultados(false);
+        setPaused(false); // ✅ Reinicia pausa
         setResetTimerSignal((prev) => prev + 1);
         if (puzzleRef.current) {
-          puzzleRef.current.reiniciarPuzzle(); // 🔥 recargar el primer puzzle automáticamente
+          puzzleRef.current.reiniciarPuzzle();
         }
       })
       .catch((error) => {
         console.error("Error al reiniciar en backend:", error);
       });
+  };
+
+  const handlePauseToggle = () => {
+    setPaused(true);
   };
 
   return (
@@ -58,13 +66,29 @@ export default function PuzzlePage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        isPaused={isPaused}
+        onPauseToggle={handlePauseToggle}
       />
-      <PuzzleVisualGame
-        ref={puzzleRef} // 🔥 pasa la referencia
-        onCorrect={incrementarScore}
-        onRespuestaMedida={agregarTiempoRespuesta}
-        onPuzzlesCompletados={onPuzzlesCompletados}
-      />
+
+      {!isPaused && (
+        <PuzzleVisualGame
+          ref={puzzleRef}
+          onCorrect={incrementarScore}
+          onRespuestaMedida={agregarTiempoRespuesta}
+          onPuzzlesCompletados={onPuzzlesCompletados}
+        />
+      )}
+
+      {isPaused && (
+        <div className="overlay">
+          <div className="pause-menu">
+            <h2>Juego en Pausa</h2>
+            <button onClick={() => setPaused(false)}>Reanudar</button>
+            <button onClick={() => navigate("/main-menu")}>Salir</button>
+          </div>
+        </div>
+      )}
+
 
       {showResultados && (
         <div className="overlay">

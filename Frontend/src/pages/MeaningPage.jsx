@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import MeaningTest from "../components/Meaning";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
+import { useNavigate } from "react-router-dom";
 import "../styles/Meaning/MeaningPage.css";
 
 export default function MeaningPage() {
@@ -11,7 +12,10 @@ export default function MeaningPage() {
   const [nivelActual, setNivel] = useState(6);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
-  const meamingRef = useRef();
+  const [isPaused, setIsPaused] = useState(false); // 👈 PAUSA
+  const meaningRef = useRef();
+  const navigate = useNavigate();
+
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
 
   const onTimeEnd = () => {
@@ -28,52 +32,45 @@ export default function MeaningPage() {
 
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
 
-  const pasarNivel = () => {
-    let nivel = nivelActual;
-    if (incorrectas < 4) {
-      nivel = nivelActual + 1;
-      setNivel((prev) => prev + 1);
-    }
-
-    setIncorrectas(0);
-    if (meamingRef.current) {
-      meamingRef.current.pasarNivel(nivel);
-    }
-  };
-
   const reiniciarJuego = () => {
     setScore(0);
     setIncorrectas(0);
     setTiempos([]);
     setShowResultados(false);
     setResetTimerSignal((prev) => prev + 1);
-
-    if (meamingRef.current) {
-      meamingRef.current.reiniciarPrueba(6);
+    setNivel(6);
+    if (meaningRef.current) {
+      meaningRef.current.reiniciarPrueba(nivelActual);
     }
   };
 
   useEffect(() => {
-    if (meamingRef.current) {
-      meamingRef.current.reiniciarPrueba(6);
+    if (meaningRef.current) {
+      meaningRef.current.pasarNivel(nivelActual);
     }
-  }, []);
+  }, [nivelActual]);
 
   return (
-    <div className="app-container">
+    <div className="app-container-meaning">
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
-      />
-      <MeaningTest
-        ref={meamingRef}
-        onCorrect={incrementarScore}
-        onRespuestaMedida={agregarTiempoRespuesta}
-        onIncorrect={respIncorrecta}
-        onFinPruebas={pasarNivel}
+        onPauseToggle={() => setIsPaused(true)} // 👈 botón "pausar"
+        isPaused={isPaused}
       />
 
+      {/* 👇 Componente principal de prueba */}
+      <MeaningTest
+        ref={meaningRef}
+        onCorrect={incrementarScore}
+        onIncorrect={respIncorrecta}
+        onRespuestaMedida={agregarTiempoRespuesta}
+        onFinPruebas={() => setShowResultados(true)}
+        isPaused={isPaused} // 👈 se pasa a MeaningTest
+      />
+
+      {/* 👇 Resultados */}
       {showResultados && (
         <div className="overlay">
           <Resultados
@@ -82,6 +79,17 @@ export default function MeaningPage() {
             onContinuar={reiniciarJuego}
             causa={"tiempo"}
           />
+        </div>
+      )}
+
+      {/* 👇 Pausa activa */}
+      {isPaused && (
+        <div className="overlay">
+          <div className="pause-menu">
+            <h2>Juego en Pausa</h2>
+            <button onClick={() => setIsPaused(false)}>Reanudar</button>
+            <button onClick={() => navigate("/main-menu")}>Salir</button>
+          </div>
         </div>
       )}
     </div>

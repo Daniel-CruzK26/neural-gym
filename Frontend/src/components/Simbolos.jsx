@@ -9,7 +9,7 @@ import IconoSVG from "./Icono";
 import "../styles/Simbolos/Simbolos.css";
 
 const SimbolosTest = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas }, ref) => {
+  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused }, ref) => {
     const [game, setGame] = useState([]);
     const [pruebaActual, setPruebaActual] = useState({});
     const [seleccionada, setSeleccionada] = useState("");
@@ -73,6 +73,7 @@ const SimbolosTest = forwardRef(
     };
 
     const toggleSeleccion = (opc, index) => {
+      if (isPaused) return;
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);
