@@ -8,7 +8,7 @@ import React, {
 import "../styles/StoopTest/Stoop.css";
 
 const StoopTest = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onIncorrect }, ref) => {
+  ({ onCorrect, onRespuestaMedida, onIncorrect, isPaused }, ref) => {
     const [game, setGame] = useState({
       nombre_color: "",
       color_objetivo: "",
@@ -70,6 +70,8 @@ const StoopTest = forwardRef(
     }));
 
     const toggleSeleccion = (name, index) => {
+      if (isPaused) return;
+      
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);

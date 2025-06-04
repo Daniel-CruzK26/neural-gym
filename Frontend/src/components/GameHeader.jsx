@@ -3,43 +3,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faBook } from "@fortawesome/free-solid-svg-icons";
 import "../styles/utils/GameHeader.css";
 
-function GameHeader({ score = 0, onTimeEnd, resetTimerSignal }) {
+function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, onPauseToggle, isPaused }) {
   const TIEMPO_INICIAL = 90;
   const [timeLeft, setTimeLeft] = useState(TIEMPO_INICIAL);
   const timerRef = useRef(null);
 
-  const iniciarTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    setTimeLeft(TIEMPO_INICIAL);
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current);
-          if (onTimeEnd) onTimeEnd();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  };
-
   useEffect(() => {
-    iniciarTimer(); // iniciar al cargar
-    return () => clearInterval(timerRef.current); // limpiar al desmontar
-  }, []);
+    if (isPaused) {
+      clearInterval(timerRef.current);
+    } else {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timerRef.current);
+            onTimeEnd?.();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(timerRef.current);
+  }, [isPaused]);
 
   useEffect(() => {
     if (resetTimerSignal !== 0) {
-      iniciarTimer(); // 🔥 reiniciar al cambiar resetTimerSignal
+      setTimeLeft(TIEMPO_INICIAL);
+      if (!isPaused) {
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
+          setTimeLeft((prev) => {
+            if (prev <= 1) {
+              clearInterval(timerRef.current);
+              onTimeEnd?.();
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      }
     }
-  }, [resetTimerSignal]);
+  }, [resetTimerSignal, isPaused]);
 
   return (
     <div className="game-header-container">
       <header className="game-header">
-        <div className="icon-pause">
+        <div className="icon-pause" onClick={onPauseToggle}>
           <FontAwesomeIcon className="icono-game-header" icon={faPause} />
         </div>
         <div className="score">

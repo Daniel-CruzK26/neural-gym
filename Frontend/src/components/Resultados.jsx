@@ -6,7 +6,7 @@ function Resultados({ puntaje, velocidad, onContinuar, causa }) {
       <div className="resultado-header">
         {causa === "puzzles" ? "¡Felicidades!" : "Tiempo Agotado"}
       </div>
-
+      
       <div className="resultado-body">
         {causa === "puzzles" ? (
           <p>¡Completaste todos los puzzles!</p>

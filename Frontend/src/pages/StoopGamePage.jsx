@@ -12,6 +12,7 @@ export default function StoopPage() {
   const [racha, setRacha] = useState(0);
   const [incorrectSeguidos, setIncorrectos] = useState(0);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const stoopRef = useRef();
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
 
@@ -89,12 +90,15 @@ export default function StoopPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
+        onPauseToggle={() => setIsPaused(true)}
+        isPaused={isPaused}
       />
       <StoopTest
         ref={stoopRef}
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onIncorrect={respIncorrecta}
+        isPaused={isPaused}
       />
 
       {showResultados && (
@@ -105,6 +109,25 @@ export default function StoopPage() {
             onContinuar={reiniciarJuego}
             causa={"tiempo"}
           />
+        </div>
+      )}
+
+      {!isPaused && (
+        <StoopTest
+          ref={stoopRef}
+          onCorrect={incrementarScore}
+          onRespuestaMedida={agregarTiempoRespuesta}
+          onIncorrect={respIncorrecta}
+        />
+      )}
+
+      {isPaused && (
+        <div className="overlay">
+          <div className="pause-menu">
+            <h2>Juego en Pausa</h2>
+            <button onClick={() => setIsPaused(false)}>Reanudar</button>
+            <button onClick={() => window.location.reload()}>Salir</button>
+          </div>
         </div>
       )}
     </div>
