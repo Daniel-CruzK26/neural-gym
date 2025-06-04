@@ -1,6 +1,5 @@
 import React, {
   useImperativeHandle,
-  useRef,
   useState,
   forwardRef,
   useEffect,
@@ -9,7 +8,10 @@ import IconoSVG from "./Icono";
 import "../styles/Simbolos/Simbolos.css";
 
 const SimbolosTest = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused }, ref) => {
+  (
+    { onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused },
+    ref
+  ) => {
     const [game, setGame] = useState([]);
     const [pruebaActual, setPruebaActual] = useState({});
     const [seleccionada, setSeleccionada] = useState("");

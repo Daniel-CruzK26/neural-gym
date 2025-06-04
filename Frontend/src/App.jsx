@@ -1,7 +1,6 @@
 import "./App.css";
 import Login from "./components/login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Register from "./components/register";
 import PuzzlePage from "./pages/puzzlesVisualesGame";
 import StoopPage from "./pages/StoopGamePage";
