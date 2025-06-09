@@ -2,10 +2,7 @@ import React, { useRef, useState, forwardRef, useEffect } from "react";
 import "../styles/TOVA/TovaTest.css";
 
 const TovaTest = forwardRef(
-  (
-    { onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused },
-    ref
-  ) => {
+  ({ onCorrect, onRespuestaMedida, onIncorrect, isPaused }, ref) => {
     const [shownNumber, setShownNumber] = useState(0);
     const [numObj, setNumObj] = useState(0);
     const [estadoRespuesta, setEstadoRespuesta] = useState("");

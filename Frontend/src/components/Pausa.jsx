@@ -1,21 +1,16 @@
-import "../styles/utils/Resultados.css";
+import "../styles/utils/Pausa.css";
 
-function Pausa({ puntaje, onResume, onSalir }) {
+function Pausa({ onResume, onExit }) {
   return (
-    <div className="resultado-box">
-      <div className="resultado-header">Juego en Pausa</div>
+    <div className="pause-menu">
+      <h2>Prueba en pausa</h2>
+      <button className="pause-btn-continuar" onClick={onResume}>
+        Reanudar
+      </button>
 
-      <div className="resultado-body">
-        <p>Puntaje actual: {puntaje}</p>
-
-        <button className="btn-continuar" onClick={onResume}>
-          Reanudar
-        </button>
-
-        <button className="btn-continuar" onClick={onSalir}>
-          Salir
-        </button>
-      </div>
+      <button className="btn-salir" onClick={onExit}>
+        Salir
+      </button>
     </div>
   );
 }

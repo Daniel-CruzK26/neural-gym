@@ -1,0 +1,33 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.pause-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 400px;
+  height: 300px;
+  background-color: #c8eeff;
+}
+
+.pause-menu button {
+  padding: 4px 40px;
+  box-sizing: content-box;
+  font-size: 1.2rem;
+  height: 35px;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.3);
+}

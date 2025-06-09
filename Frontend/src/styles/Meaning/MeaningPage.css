@@ -1,10 +1,10 @@
-.app-container {
+.app-container-meaning {
   margin: 0;
   padding: 0;
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, #fce9e9, #f5c3c3);
+  background: linear-gradient(180deg, #e2f2fb, #fbb6b6);
 }
 
 .overlay {

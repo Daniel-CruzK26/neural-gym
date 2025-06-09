@@ -1,53 +1,72 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .resultado-box {
-    background-color: #c8ddff;
-    border-radius: 15px;
-    width: 500px;
-    height: 385px;
-    margin: auto;
-    text-align: center;
-    font-family: 'Segoe UI';
-    animation: fadeInZoom 0.3s ease-out;
-  }
-  
-  .resultado-header {
-    background-color: #4f8899;
-    color: white;
-    padding: 12px;
-    font-size: 34px;
-    font-weight: bold;
-    border-radius: 8px 8px 0 0;
-  }
-  
-  .resultado-body {
-    margin-top: 20px;
-    font-size: 28px;
-    color: black;
-  }
-  
-  .btn-continuar {
-    background-color: #4f8899;
-    color: white;
-    font-size: 28px;
-    padding: 10px 40px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
+  background-color: #c8eeff;
+  border-radius: 15px;
+  width: 500px;
+  height: 320px;
+  margin: auto;
+  text-align: center;
+  font-family: "Segoe UI";
+  animation: fadeInZoom 0.3s ease-out;
+}
 
-  .btn-continuar:hover{
-    background-color: #4a6d82;
-  }
+.resultado-header {
+  color: black;
+  letter-spacing: 4px;
+  padding: 12px;
+  font-size: 34px;
+  font-weight: normal;
+  border-radius: 8px 8px 0 0;
+}
 
-  @keyframes fadeInZoom {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+.resultado-body {
+  margin-top: 20px;
+  color: black;
+  gap: 40px;
+}
+
+.resultado-body h3 {
+  font-size: 1.8rem;
+  font-weight: normal;
+}
+
+.btn-continuar {
+  background-color: #a0c6fb;
+  color: white;
+  font-size: 28px;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  margin-top: 55px;
+}
+
+.btn-continuar:hover {
+  background-color: #90bcf9;
+}
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

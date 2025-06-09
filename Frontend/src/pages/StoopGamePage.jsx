@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import StoopTest from "../components/Stoop";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
+import Pausa from "../components/Pausa";
 import "../styles/StoopTest/StoopPage.css";
 
 export default function StoopPage() {
@@ -20,6 +21,14 @@ export default function StoopPage() {
 
   const onTimeEnd = () => {
     setShowResultados(true);
+  };
+
+  const handlePauseToggle = () => {
+    setIsPaused((prev) => !prev);
+  };
+
+  const volverMenuPrincipal = () => {
+    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
 
   const incrementarScore = () => {
@@ -69,17 +78,6 @@ export default function StoopPage() {
     return (total / tiempos.length / 1000).toFixed(2);
   };
 
-  const reiniciarJuego = () => {
-    setScore(0);
-    setTiempos([]);
-    setShowResultados(false);
-    setResetTimerSignal((prev) => prev + 1);
-    setNivel(1);
-    if (stoopRef.current) {
-      stoopRef.current.reiniciarPrueba();
-    }
-  };
-
   useEffect(() => {
     if (stoopRef.current) {
       stoopRef.current.pasarNivel(nivelActual);
@@ -92,7 +90,7 @@ export default function StoopPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
-        onPauseToggle={() => setIsPaused(true)}
+        onPauseToggle={handlePauseToggle}
         isPaused={isPaused}
       />
       <StoopTest
@@ -108,7 +106,7 @@ export default function StoopPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
-            onContinuar={reiniciarJuego}
+            onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
         </div>
@@ -120,16 +118,16 @@ export default function StoopPage() {
           onCorrect={incrementarScore}
           onRespuestaMedida={agregarTiempoRespuesta}
           onIncorrect={respIncorrecta}
+          isPaused={isPaused}
         />
       )}
 
       {isPaused && (
         <div className="overlay">
-          <div className="pause-menu">
-            <h2>Juego en Pausa</h2>
-            <button onClick={() => setIsPaused(false)}>Reanudar</button>
-            <button onClick={() => navigate("/main-menu")}>Salir</button>
-          </div>
+          <Pausa
+            onResume={() => setIsPaused(false)}
+            onExit={volverMenuPrincipal}
+          />
         </div>
       )}
     </div>

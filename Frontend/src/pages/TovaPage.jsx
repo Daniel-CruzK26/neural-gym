@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import GameHeader from "../components/GameHeader";
 import TovaTest from "../components/Tova";
 import Resultados from "../components/Resultados";
-import "../styles/StoopTest/StoopPage.css"; // ✅ usamos el mismo CSS que Stoop
+import Pausa from "../components/Pausa";
+import "../styles/TOVA/TovaPage.css";
 
 export default function TovaPage() {
   const [score, setScore] = useState(0);
@@ -11,8 +12,7 @@ export default function TovaPage() {
   const [showResultados, setShowResultados] = useState(false);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // ✅ igual que en Stoop
-
+  const [isPaused, setIsPaused] = useState(false);
   const navigate = useNavigate();
   const tovaRef = useRef();
 
@@ -22,6 +22,14 @@ export default function TovaPage() {
 
   const onTimeEnd = () => {
     setShowResultados(true);
+  };
+
+  const handlePauseToggle = () => {
+    setIsPaused((prev) => !prev);
+  };
+
+  const volverMenuPrincipal = () => {
+    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
 
   const velocidadPromedio = () => {
@@ -37,19 +45,6 @@ export default function TovaPage() {
     setIncorrectas(0);
   };
 
-  const reiniciarJuego = () => {
-    setScore(0);
-    setIncorrectas(0);
-    setTiempos([]);
-    setIsPaused(false); // ✅ igual que en Stoop
-    setShowResultados(false);
-    setResetTimerSignal((prev) => prev + 1);
-
-    if (tovaRef.current) {
-      tovaRef.current.reiniciarPrueba();
-    }
-  };
-
   useEffect(() => {
     if (tovaRef.current) {
       tovaRef.current.reiniciarPrueba();
@@ -57,15 +52,16 @@ export default function TovaPage() {
   }, []);
 
   return (
-    <div className="app-container-stoop"> {/* ✅ mismo estilo que Stoop */}
+    <div className="app-container-stoop">
+      {" "}
+      {/* ✅ mismo estilo que Stoop */}
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
         isPaused={isPaused}
-        onPauseToggle={() => setIsPaused(true)} // ✅ mismo control
+        onPauseToggle={handlePauseToggle}
       />
-
       {!isPaused && (
         <TovaTest
           ref={tovaRef}
@@ -76,23 +72,20 @@ export default function TovaPage() {
           isPaused={isPaused}
         />
       )}
-
       {isPaused && (
         <div className="overlay">
-          <div className="pause-menu">
-            <h2>Juego en Pausa</h2>
-            <button onClick={() => setIsPaused(false)}>Reanudar</button>
-            <button onClick={() => navigate("/main-menu")}>Salir</button> {/* ✅ */}
-          </div>
+          <Pausa
+            onResume={() => setIsPaused(false)}
+            onExit={volverMenuPrincipal}
+          />
         </div>
       )}
-
       {showResultados && (
         <div className="overlay">
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
-            onContinuar={reiniciarJuego}
+            onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
         </div>

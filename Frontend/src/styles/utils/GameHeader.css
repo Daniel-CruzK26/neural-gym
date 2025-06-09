@@ -64,10 +64,8 @@
   height: 60px;
   font-size: 2rem;
   font-weight: bold;
-  background-color: #ffffff;
   border-radius: 50%;
-  border: 2px solid #a0c6fb;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +74,6 @@
 }
 
 .icon-pause:hover {
-  background-color: #d8efff;
   transform: scale(1.1);
 }
 
@@ -151,6 +148,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

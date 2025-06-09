@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // ✅ Importar hook para navegación
+import { useNavigate } from "react-router-dom"; // ✅ Importar hook para navegación
 import SimbolosTest from "../components/Simbolos";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import Pausa from "../components/Pausa";
-import "../styles/StoopTest/StoopPage.css";
+import "../styles/Simbolos/SimbolosPage.css";
 
 export default function SimbolosPage() {
-  const navigate = useNavigate();  // ✅ hook para navegación
+  const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const [incorrectas, setIncorrectas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
@@ -38,26 +38,13 @@ export default function SimbolosPage() {
     setIncorrectas(0);
   };
 
-  const reiniciarJuego = () => {
-    setScore(0);
-    setIncorrectas(0);
-    setTiempos([]);
-    setIsPaused(false);
-    setShowResultados(false);
-    setResetTimerSignal((prev) => prev + 1);
-
-    if (simbolref.current) {
-      simbolref.current.reiniciarPrueba();
-    }
-  };
-
   const handlePauseToggle = () => {
     setIsPaused((prev) => !prev);
   };
 
   // Nueva función para regresar al menú principal
   const volverMenuPrincipal = () => {
-    navigate("/main-menu");  // Cambia "/" por la ruta que sea tu menú principal
+    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
 
   useEffect(() => {
@@ -99,7 +86,7 @@ export default function SimbolosPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
-            onContinuar={reiniciarJuego}
+            onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
         </div>

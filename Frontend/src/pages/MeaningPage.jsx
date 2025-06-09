@@ -3,6 +3,7 @@ import MeaningTest from "../components/Meaning";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import { useNavigate } from "react-router-dom";
+import Pausa from "../components/Pausa";
 import "../styles/Meaning/MeaningPage.css";
 
 export default function MeaningPage() {
@@ -32,16 +33,12 @@ export default function MeaningPage() {
 
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
 
-  const reiniciarJuego = () => {
-    setScore(0);
-    setIncorrectas(0);
-    setTiempos([]);
-    setShowResultados(false);
-    setResetTimerSignal((prev) => prev + 1);
-    setNivel(6);
-    if (meaningRef.current) {
-      meaningRef.current.reiniciarPrueba(nivelActual);
-    }
+  const handlePauseToggle = () => {
+    setIsPaused((prev) => !prev);
+  };
+
+  const volverMenuPrincipal = () => {
+    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
 
   useEffect(() => {
@@ -56,7 +53,7 @@ export default function MeaningPage() {
         score={score}
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
-        onPauseToggle={() => setIsPaused(true)} // 👈 botón "pausar"
+        onPauseToggle={handlePauseToggle}
         isPaused={isPaused}
       />
 
@@ -76,20 +73,18 @@ export default function MeaningPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
-            onContinuar={reiniciarJuego}
+            onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
         </div>
       )}
 
-      {/* 👇 Pausa activa */}
       {isPaused && (
         <div className="overlay">
-          <div className="pause-menu">
-            <h2>Juego en Pausa</h2>
-            <button onClick={() => setIsPaused(false)}>Reanudar</button>
-            <button onClick={() => navigate("/main-menu")}>Salir</button>
-          </div>
+          <Pausa
+            onResume={() => setIsPaused(false)}
+            onExit={volverMenuPrincipal}
+          />
         </div>
       )}
     </div>

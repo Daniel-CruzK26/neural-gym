@@ -4,7 +4,8 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, #ddf3ff, rgb(182, 218, 254));
+  height: 100vh;
+  background: linear-gradient(180deg, #ddf3ff, rgb(43, 125, 207));
 }
 
 .overlay {
