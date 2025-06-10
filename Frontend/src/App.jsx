@@ -10,13 +10,13 @@ import TovaPage from "./pages/TovaPage";
 import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
 import PrivateRoute from "./components/PrivateRoute";
+import DigitosPage from "./pages/DigitosGamePage"; // 🆕 Añadido
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* Ruta principal: componente o h1 directamente */}
           <Route path="/" element={<NeuralGymHomePage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -60,7 +60,15 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/tova-test" element={<TovaPage />}></Route>
+          <Route
+            path="/digitos-test"
+            element={
+              <PrivateRoute>
+                <DigitosPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/tova-test" element={<TovaPage />} />
         </Routes>
       </div>
     </Router>
