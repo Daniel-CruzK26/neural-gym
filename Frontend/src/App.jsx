@@ -10,7 +10,9 @@ import TovaPage from "./pages/TovaPage";
 import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
 import PrivateRoute from "./components/PrivateRoute";
-import DigitosPage from "./pages/DigitosGamePage"; // 🆕 Añadido
+import DigitosPage from "./pages/DigitosGamePage"; 
+import MisScoresPage from './pages/MisScoresPage';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<NeuralGymHomePage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/estadisticas" element={<MisScoresPage />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/main-menu"
