@@ -19,10 +19,10 @@ urlpatterns = [
     path('stoop/', include('apps.Stoop.routers')),
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
-    path('Digitos/', include('apps.Digitos.routers')),
     path('pruebas/', include('apps.Pruebas.urls')),
     path('register/', RegisterView.as_view(), name='register'),
-    path('api/', include('apps.User.urls'))
+    path('api/', include('apps.User.urls')),
+    path('api/digitos/', include('apps.Digitos.urls')),
 ]
 
 if settings.DEBUG:
