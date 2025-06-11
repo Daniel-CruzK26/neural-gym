@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Modal from './Modal';
-import './Navbar.css';
-
+import "../../styles/Digitos/Navbar.css";
 function Navbar() {
     const [tiempo, setTiempo] = useState(60);
     const[activo, setActivo] = useState(false);

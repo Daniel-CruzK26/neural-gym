@@ -1,5 +1,5 @@
 import React from 'react';
-import './Modal.css';
+import '../../styles/Digitos/Modal.css';
 
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
