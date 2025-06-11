@@ -21,8 +21,7 @@ urlpatterns = [
     path('Simbolos/', include('apps.Simbolos.routers')),
     path('pruebas/', include('apps.Pruebas.urls')),
     path('register/', RegisterView.as_view(), name='register'),
-    path('api/', include('apps.User.urls')),
-    path('api/digitos/', include('apps.Digitos.urls')),
+    path('api/', include('apps.User.urls'))
 ]
 
 if settings.DEBUG:
