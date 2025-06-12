@@ -30,8 +30,8 @@ export default function MeaningPage() {
   };
 
   const incrementarScore = () => setScore((prev) => prev + 1);
-
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
+  const incrementarNivel = () => setNivel((prev) => prev + 1);
 
   const incrementarNivel = () => setNivel((prev) => prev + 1);
 
