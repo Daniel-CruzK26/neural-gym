@@ -19,6 +19,7 @@ function App() {
           {/* Ruta principal: componente o h1 directamente */}
           <Route path="/" element={<NeuralGymHomePage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/estadisticas" element={<MisScoresPage />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/main-menu"

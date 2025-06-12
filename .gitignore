@@ -1,3 +1,7 @@
+Backend/neuralgym/apps/Digitos/vosk-model-es-0.42/*
+!Backend/neuralgym/apps/Digitos/vosk-model-es-0.42/.gitkeep
+
+
 # --- Node.js / React ---
 node_modules/
 build/

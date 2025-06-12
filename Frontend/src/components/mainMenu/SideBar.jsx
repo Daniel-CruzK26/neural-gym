@@ -25,9 +25,13 @@ const SideBar = () => {
         <button className="menu-button">
           <FontAwesomeIcon className="icon" icon={faUser} /> Perfil
         </button>
-        <button className="menu-button">
-          <FontAwesomeIcon className="icon" icon={faChartBar} /> Estadísticas
-        </button>
+
+         {/* Estadísticas */}
+        <Link to="/estadisticas" className="menu-button">
+          <FontAwesomeIcon className="icon" icon={faChartBar} />
+          <span>Estadísticas</span>
+        </Link>
+
         <form onSubmit={handleLogout}>
           <button button className="menu-button">
             <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} />

@@ -24,6 +24,11 @@ const Header = () => {
         <Link to="/register">
           <button className="register-button">Regístrate</button>
         </Link>
+
+        {/* Aquí añades Estadísticas */}
+        <Link to="/estadisticas">
+          <button className="register-button">Estadísticas</button>
+        </Link>
       </nav>
     </header>
   );

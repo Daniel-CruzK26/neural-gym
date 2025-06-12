@@ -1,6 +1,7 @@
 import "../styles/mainMenu.css";
 import TestList from "../components/mainMenu/TestList";
 import SideBar from "../components/mainMenu/SideBar";
+import ScoresHistory from '../components/ScoresHistory';
 import { React, useState, useEffect } from "react";
 
 function MainMenu() {
