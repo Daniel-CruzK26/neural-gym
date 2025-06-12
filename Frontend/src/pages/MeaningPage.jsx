@@ -33,8 +33,6 @@ export default function MeaningPage() {
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
   const incrementarNivel = () => setNivel((prev) => prev + 1);
 
-  const incrementarNivel = () => setNivel((prev) => prev + 1);
-
   const handlePauseToggle = () => {
     setIsPaused((prev) => !prev);
   };
