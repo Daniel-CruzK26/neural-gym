@@ -19,14 +19,16 @@ const SideBar = () => {
     <aside className="sidebar">
       <div className="header">
         <img src="logo.png" alt="Logo de NeuralGym" className="logo" />
-        <span className="title">NeuralGym</span>
+        <Link to="/main-menu">
+          <span className="title">NeuralGym</span>
+        </Link>
       </div>
       <nav className="menu">
         <button className="menu-button">
           <FontAwesomeIcon className="icon" icon={faUser} /> Perfil
         </button>
 
-         {/* Estadísticas */}
+        {/* Estadísticas */}
         <Link to="/estadisticas" className="menu-button">
           <FontAwesomeIcon className="icon" icon={faChartBar} />
           <span>Estadísticas</span>
@@ -37,7 +39,7 @@ const SideBar = () => {
             <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} />
             Cerrar sesión
           </button>
-          </form>
+        </form>
       </nav>
     </aside>
   );

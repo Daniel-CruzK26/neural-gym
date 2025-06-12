@@ -93,13 +93,6 @@ export default function StoopPage() {
         onPauseToggle={handlePauseToggle}
         isPaused={isPaused}
       />
-      <StoopTest
-        ref={stoopRef}
-        onCorrect={incrementarScore}
-        onRespuestaMedida={agregarTiempoRespuesta}
-        onIncorrect={respIncorrecta}
-        isPaused={isPaused}
-      />
 
       {showResultados && (
         <div className="overlay">
@@ -112,15 +105,13 @@ export default function StoopPage() {
         </div>
       )}
 
-      {!isPaused && (
-        <StoopTest
-          ref={stoopRef}
-          onCorrect={incrementarScore}
-          onRespuestaMedida={agregarTiempoRespuesta}
-          onIncorrect={respIncorrecta}
-          isPaused={isPaused}
-        />
-      )}
+      <StoopTest
+        ref={stoopRef}
+        onCorrect={incrementarScore}
+        onRespuestaMedida={agregarTiempoRespuesta}
+        onIncorrect={respIncorrecta}
+        isPaused={isPaused}
+      />
 
       {isPaused && (
         <div className="overlay">

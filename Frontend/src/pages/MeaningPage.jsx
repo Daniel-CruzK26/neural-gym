@@ -30,8 +30,8 @@ export default function MeaningPage() {
   };
 
   const incrementarScore = () => setScore((prev) => prev + 1);
-
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
+  const incrementarNivel = () => setNivel((prev) => prev + 1);
 
   const handlePauseToggle = () => {
     setIsPaused((prev) => !prev);
@@ -63,7 +63,7 @@ export default function MeaningPage() {
         onCorrect={incrementarScore}
         onIncorrect={respIncorrecta}
         onRespuestaMedida={agregarTiempoRespuesta}
-        onFinPruebas={() => setShowResultados(true)}
+        onFinPruebas={incrementarNivel}
         isPaused={isPaused} // 👈 se pasa a MeaningTest
       />
 

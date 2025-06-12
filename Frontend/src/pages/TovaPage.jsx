@@ -53,8 +53,6 @@ export default function TovaPage() {
 
   return (
     <div className="app-container-stoop">
-      {" "}
-      {/* ✅ mismo estilo que Stoop */}
       <GameHeader
         score={score}
         onTimeEnd={onTimeEnd}
@@ -62,16 +60,14 @@ export default function TovaPage() {
         isPaused={isPaused}
         onPauseToggle={handlePauseToggle}
       />
-      {!isPaused && (
-        <TovaTest
-          ref={tovaRef}
-          onCorrect={incrementarScore}
-          onRespuestaMedida={agregarTiempoRespuesta}
-          onIncorrect={respIncorrecta}
-          onFinPruebas={pasarNivel}
-          isPaused={isPaused}
-        />
-      )}
+      <TovaTest
+        ref={tovaRef}
+        onCorrect={incrementarScore}
+        onRespuestaMedida={agregarTiempoRespuesta}
+        onIncorrect={respIncorrecta}
+        onFinPruebas={pasarNivel}
+        isPaused={isPaused}
+      />
       {isPaused && (
         <div className="overlay">
           <Pausa
