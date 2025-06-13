@@ -20,9 +20,11 @@ urlpatterns = [
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
     path('pruebas/', include('apps.Pruebas.urls')),
+    path('Digitos/', include('apps.Digitos.urls')),  # ✅ integración aquí
     path('register/', RegisterView.as_view(), name='register'),
     path('api/', include('apps.User.urls'))
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

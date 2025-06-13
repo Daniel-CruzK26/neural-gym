@@ -1,9 +1,10 @@
-from . import views
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import Digitos
 
-# urlpatterns = [
-#     path("", views.home, name = "home")
-# ]
+router = DefaultRouter()
+router.register(r'digitos', Digitos, basename='digitos')
+
 urlpatterns = [
-    path('procesar_audio/', views.procesar_audio, name='procesar_audio'),
+    path('api/', include(router.urls)),  # Esto incluye /api/digitos/procesar_audio/
 ]

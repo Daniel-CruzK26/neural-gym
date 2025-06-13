@@ -156,10 +156,10 @@ function Navbar() {
         formData.append('numeros', JSON.stringify(numeros));
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/procesar_audio/', {
-                method: 'POST',
-                body: formData,
-            });
+            const response = await fetch('http://127.0.0.1:8000/api/digitos/procesar_audio/', {
+    method: 'POST',
+    body: formData,
+});
 
             if (!response.ok) {
                 const errorData = await response.json(); 
