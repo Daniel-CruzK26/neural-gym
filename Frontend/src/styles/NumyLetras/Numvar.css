@@ -1,8 +1,10 @@
 
+
 .navbar {
     background-color: #4E869A;
     height: 50px;
-    margin: 0 auto;
+    margin-bottom: 700px;
+    margin-left: 290px;;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -10,13 +12,15 @@
     position: relative;
     border-radius: 25px;
     width: 1000px;
+    box-sizing: border-box;
+
   }
   
   .navbar-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 80px;
+    align-items: flex-start;
+    height: auto;
     max-width: 1500px;
     background-color: transparent;
   }
@@ -28,7 +32,7 @@
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
-    padding-bottom: 5px;
+    padding-top: 5px;
   }
 
   .tiempo{
@@ -103,30 +107,6 @@
     position: fixed;
   }
 
-  .grabando-voz p{
-    position: fixed;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    text-align: center;
-  }
-
-  .grabando-voz button{
-    position: fixed;
-    top: 400px;
-    bottom: 10px;
-    right: 10px;
-    left: 380px;
-    padding: 5px 30px;
-    background-color: #4f8d9d;
-    border: none;
-    border-radius: 20px;
-    font-size: 55px;
-    color: black;
-    cursor: pointer;
-    width: 350px;
-    height: 85px;
-  }
 
   .Numeros {
     font-size: 60px;
@@ -200,22 +180,20 @@
     color: #ffffff;
     width: 150px;
     height: 40px;
-    border-radius: 15%;
+    border-radius: 20%;
     font-family: 'Gill Sans MT';
-    align-items: right;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
-    justify-content: center;
-    position:fixed;
-    top: 74%;
-    bottom: 0%;
-    left: 45%;
+    position:inherit;
+    margin-top:auto;
+    margin-bottom: auto;
+    text-align: center;
     }
 
     .instrucciones h6{
-      color: rgba(14, 98, 107, 0.666);
+      color: rgba(41, 92, 98, 0.666);
       text-align:center;
       font-family:'Gill Sans MT';
       font-size: 18px;

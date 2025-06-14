@@ -178,7 +178,7 @@ function Navbar() {
         formData.append('numeros', JSON.stringify(numeros));
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/procesar_texto/', {
+            const response = await fetch('http://127.0.0.1:8000/numyletras/procesar_texto/', {
                 method: 'POST',
                 body: formData,
             });
