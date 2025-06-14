@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('puzzles-visuales/', include('apps.PuzzlesVisuales.urls')),
     path('digitos/', include('apps.Digitos.urls')),
+    path('numyletras/', include('apps.NumsyLetras.urls')),
     path('stoop/', include('apps.Stoop.routers')),
     path('ColorMean/', include('apps.colorandMean.routers')),
     path('Simbolos/', include('apps.Simbolos.routers')),
