@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Modal from './Modal';
-import "../../styles/Digitos/Navbar.css";
-function Navbar() {
+import "../../styles/Digitos/DigitosNavbar.css";
+function DigitosGame() {
     const [tiempo, setTiempo] = useState(60);
     const[activo, setActivo] = useState(false);
     const[score, setScore] = useState(0);
@@ -339,120 +339,127 @@ function Navbar() {
         };
     }, []); 
 
+    useEffect(() => {
+        document.body.classList.add('digitos-body');
+        return () => document.body.classList.remove('digitos-body');
+    }, []);
+
     return (
-        <div className='navbar-container'>
-            <div className = 'instrucciones'>
-            {modoAbierto && (
-                <Modal isOpen={modoAbierto} onClose={() => setModalAbierto(false)}>
-                    {modoModal === 'inicio' ? (
-                        <>
-                            <h2>PRUEBA DÍGITOS</h2> 
-                            <br></br>
-                            <p>Esta prueba estimula la resistencia a la distracción, la memoria inmediata y la memoria de trabajo.</p>
-                            <br></br>
-                            <h5>Lee atentamente las instrucciones:</h5>
-                            <ol style={{ textAlign: 'justify' }}>
-                                <li>Se presentan una serie de números.</li> 
-                                <li>Memoriza o repite los números en el orden indicado.</li> 
-                                <li>Luego, di tu respuesta en voz alta cuando comience la grabación.</li>
-                                <li>Da click en detener cuando hayas terminado de decir tu respuesta.</li>
-                                <li>Se te mostrará si la respuesta es correcta o incorrecta.</li>
-                                <li>Ganas puntos por cada respuesta correcta.</li>
-                            </ol>
-                            <div className = 'botoncomenzar'>
-                            <button onClick={iniciarJuego} disabled={cuentaRegresiva !== null}>Comenzar</button> 
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <h2>Recordando ...</h2>
-                            <br></br>
-                            <p>Esta prueba evalúa la atención, concentración y memoria de trabajo.</p>
-                            <br></br>
-                            <ul style={{ textAlign: 'left' }}>
-                                <li> Observa la secuencia de números que aparece por 5 segundos.</li> 
-                                <li> Cuando empiece la grabación, di la secuencia según la instrucción mostrada y da click en detener cuando hayas terminado.</li>
-                                <li> Si aciertas, ganas puntos. Si te equivocas, no pasa nada. ¡Sigue intentando!</li>
-                            </ul>
-                            <br></br>
-                            <h6>Puedes pausar el juego con el botón de pausa, o volver a ver esta ayuda cuando quieras.</h6>
-                        </>
-                    )}
-                </Modal>
-            )}
-            </div>
-            <div className = 'Pausa'>
-            {mostrarModalPausa && (
-                <Modal isOpen={mostrarModalPausa} onClose={() => setMostrarModalPausa(false)}>
-                    <h2>Prueba en pausa</h2>
-                    <br></br>
-                    <div className = 'botonesPausa'>
-                    <button onClick={toggleActivo}>Reanudar</button>
-                    <br></br>
-                    <button onClick={reiniciarJuego}>Reintentar</button>
-                    <br></br>
-                    <button disabled>Menú</button>
-                    <br></br>
-                    <button disabled>Salir</button>
-                    </div>
-                </Modal>
-            )}
-            </div>
-            {cuentaRegresiva !== null ? (
-                <div className="pantalla-cuenta">
-                    <h1>{cuentaRegresiva}</h1>
-                </div>
-            ) : juegoTerminado ? (
-                <div className="pantalla-final">
-                    <h2>⏱️ TIEMPO TERMINADO</h2>
-                    <p>Tu puntaje final fue: <strong>{score}</strong></p>
-                </div>
-            ) : (
-                <div className='navbar'>
-                    <div className="Numeros">
-                    {cargando ? (
-                    <div className = "pantalla-cargando">
-                        <h3>Evaluando respuesta...</h3>
-                    </div>
-                    ) : (mostrarNumeros && activo) ? (
+        <div className="digitos-root">
+            <div className='digitos-navbar-container'>
+                <div className = 'digitos-instrucciones	'>
+                {modoAbierto && (
+                    <Modal isOpen={modoAbierto} onClose={() => setModalAbierto(false)}>
+                        {modoModal === 'inicio' ? (
                             <>
-                                <h5>{modo}</h5>
-                                <p>{numeros.join(" ")}</p> 
+                                <h2>PRUEBA DÍGITOS</h2> 
+                                <br></br>
+                                <p>Esta prueba estimula la resistencia a la distracción, la memoria inmediata y la memoria de trabajo.</p>
+                                <br></br>
+                                <h5>Lee atentamente las instrucciones:</h5>
+                                <ol style={{ textAlign: 'justify' }}>
+                                    <li>Se presentan una serie de números.</li> 
+                                    <li>Memoriza o repite los números en el orden indicado.</li> 
+                                    <li>Luego, di tu respuesta en voz alta cuando comience la grabación.</li>
+                                    <li>Da click en detener cuando hayas terminado de decir tu respuesta.</li>
+                                    <li>Se te mostrará si la respuesta es correcta o incorrecta.</li>
+                                    <li>Ganas puntos por cada respuesta correcta.</li>
+                                </ol>
+                                <div className = 'digitos-boton-comenzar'>
+                                <button onClick={iniciarJuego} disabled={cuentaRegresiva !== null}>Comenzar</button> 
+                                </div>
                             </>
-                        ) : mostrarResultado ? (
+                        ) : (
                             <>
-                                <h3>{esCorrecto ? '✅ Correcto' : '❌ Incorrecto'}</h3>
+                                <h2>Recordando ...</h2>
                                 <br></br>
-                                <h6><strong>Dijiste:</strong> {Array.isArray(transcripcion) ? transcripcion.join(" ").toUpperCase() : "Sin transcripción"}</h6>
+                                <p>Esta prueba evalúa la atención, concentración y memoria de trabajo.</p>
                                 <br></br>
-                                <h6><strong>Respuesta correcta: </strong>{resultadoAPI && resultadoAPI.esperado ? (resultadoAPI.esperado.join(" ")).toUpperCase() : "Cargando..."}</h6>
+                                <ul style={{ textAlign: 'left' }}>
+                                    <li> Observa la secuencia de números que aparece por 5 segundos.</li> 
+                                    <li> Cuando empiece la grabación, di la secuencia según la instrucción mostrada y da click en detener cuando hayas terminado.</li>
+                                    <li> Si aciertas, ganas puntos. Si te equivocas, no pasa nada. ¡Sigue intentando!</li>
+                                </ul>
+                                <br></br>
+                                <h6>Puedes pausar el juego con el botón de pausa, o volver a ver esta ayuda cuando quieras.</h6>
                             </>
-                        ) : null}
-                    </div>
-
-                    <button className='boton-pausa' onClick={toggleActivo}>
-                        {activo ? "⏸" : "▶️"} 
-                    </button>
-
-                    <div className='tiempo'>{tiempo}</div>
-
-                    <div className='Score'>Score:{score}</div>
-
-                    <button className="boton-ayuda" onClick={mostrarAyuda}>
-                        !
-                    </button>
-
-                    {grabando && !mostrarResultado && (
-                        <div className="grabando-voz">
-                            <h6>Escuchando...</h6>
-                            <p className = "texto-usuario"> {textoEnTiempoReal.toUpperCase()}</p>
-                            <button onClick = {detenerGrabacionYReconocimiento}>🟥 Detener</button>
+                        )}
+                    </Modal>
+                )}
+                </div>
+                <div className = 'digitos-pausa'>
+                {mostrarModalPausa && (
+                    <Modal isOpen={mostrarModalPausa} onClose={() => setMostrarModalPausa(false)}>
+                        <h2>Prueba en pausa</h2>
+                        <br></br>
+                        <div className = 'digitos-botones-pausa'>
+                        <button onClick={toggleActivo}>Reanudar</button>
+                        <br></br>
+                        <button onClick={reiniciarJuego}>Reintentar</button>
+                        <br></br>
+                        <button disabled>Menú</button>
+                        <br></br>
+                        <button disabled>Salir</button>
                         </div>
-                    )}
+                    </Modal>
+                )}
                 </div>
-            )}
+                {cuentaRegresiva !== null ? (
+                    <div className="digitos-pantalla-cuenta">
+                        <h1>{cuentaRegresiva}</h1>
+                    </div>
+                ) : juegoTerminado ? (
+                    <div className="digitos-pantalla-final">
+                        <h2>⏱️ TIEMPO TERMINADO</h2>
+                        <p>Tu puntaje final fue: <strong>{score}</strong></p>
+                    </div>
+                ) : (
+                    <div className='digitos-navbar'>
+                        <div className="digitos-numeros">
+                        {cargando ? (
+                        <div className = "pantalla-cargando">
+                            <h3>Evaluando respuesta...</h3>
+                        </div>
+                        ) : (mostrarNumeros && activo) ? (
+                                <>
+                                    <h5>{modo}</h5>
+                                    <p>{numeros.join(" ")}</p> 
+                                </>
+                            ) : mostrarResultado ? (
+                                <>
+                                    <h3>{esCorrecto ? '✅ Correcto' : '❌ Incorrecto'}</h3>
+                                    <br></br>
+                                    <h6><strong>Dijiste:</strong> {Array.isArray(transcripcion) ? transcripcion.join(" ").toUpperCase() : "Sin transcripción"}</h6>
+                                    <br></br>
+                                    <h6><strong>Respuesta correcta: </strong>{resultadoAPI && resultadoAPI.esperado ? (resultadoAPI.esperado.join(" ")).toUpperCase() : "Cargando..."}</h6>
+                                </>
+                            ) : null}
+                        </div>
+
+                        <button className='digitos-boton-pausa' onClick={toggleActivo}>
+                            {activo ? "⏸" : "▶️"} 
+                        </button>
+
+                        <div className='digitos-tiempo'>{tiempo}</div>
+
+                        <div className='digitos-score'>Score:{score}</div>
+
+                        <button className="digitos-boton-ayuda" onClick={mostrarAyuda}>
+                            !
+                        </button>
+
+                        {grabando && !mostrarResultado && (
+                            <div className="digitos-grabando-voz">
+                                <h6>Escuchando...</h6>
+                                <p className = "digitos-texto-usuario"> {textoEnTiempoReal.toUpperCase()}</p>
+                                <button onClick = {detenerGrabacionYReconocimiento}>🟥 Detener</button>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
 
-export default Navbar;
+export default DigitosGame;

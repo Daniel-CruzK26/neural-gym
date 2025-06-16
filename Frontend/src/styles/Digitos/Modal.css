@@ -19,6 +19,8 @@
   width: 90%;
   position: relative;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.819);
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
 .modal-close {

@@ -1,0 +1,280 @@
+.digitos-root .digitos-navbar {
+  background-color: #4E869A;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  border-radius: 25px;
+  width: 1000px;
+}
+
+.digitos-navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  max-width: 1500px;
+  background-color: transparent;
+}
+
+.digitos-boton-pausa {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.digitos-tiempo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4E869A;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  border: 4px solid #d9f2ff;
+}
+
+.digitos-root .digitos-score {
+  background-color: #4E869A;
+  color: #fff;
+  font-size: 25px;
+  font-weight: bold;
+  justify-content: center;
+  height: 40px;
+  text-align: center;
+  padding: 3px 1px 3px 500px;
+}
+
+.digitos-boton-ayuda {
+  background-color: #d9f2ff;
+  color: #4f8d9d;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.digitos-boton-centro {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.digitos-boton-centro button {
+  padding: 15px 30px;
+  font-size: 60px;
+  background-color: #4f8d9d;
+  color: black;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.digitos-grabando-voz {
+  font-size: 60px;
+  color: black;
+  padding-bottom: 300px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: fixed;
+}
+
+.digitos-grabando-voz p {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  text-align: center;
+}
+
+.digitos-grabando-voz button {
+  position: fixed;
+  top: 400px;
+  left: 380px;
+  padding: 5px 30px;
+  background-color: #4f8d9d;
+  border: none;
+  border-radius: 20px;
+  font-size: 55px;
+  color: black;
+  cursor: pointer;
+  width: 350px;
+  height: 85px;
+}
+
+.digitos-root .digitos-numeros {
+  font-size: 60px;
+  color: black;
+  padding: 15px 30px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  text-align: center;
+}
+
+.digitos-numeros p {
+  padding-bottom: 60px;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.digitos-numeros h5,
+.digitos-numeros h3 {
+  text-align: center;
+}
+
+.digitos-numeros h5 {
+  padding-bottom: 60px;
+}
+
+.digitos-numeros h3 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.digitos-pantalla-final {
+  position: fixed;
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  top: 40%;
+  left: 50%;
+}
+
+.digitos-instrucciones h2 {
+  color: rgba(8, 46, 50, 0.832);
+  text-align: center;
+  font-family: 'Cooper Black';
+}
+
+.digitos-instrucciones p,
+.digitos-instrucciones h5,
+.digitos-instrucciones h6,
+.digitos-instrucciones li {
+  color: rgba(8, 46, 50, 0.832);
+  font-family: 'Gill Sans MT';
+  font-size: 16px;
+  font-weight: bold;
+  text-align: justify;
+}
+
+.digitos-instrucciones h6 {
+  text-align: center;
+  font-size: 18px;
+}
+
+.digitos-boton-comenzar button {
+  background-color: #147e96e4;
+  color: #ffffff;
+  width: 150px;
+  height: 40px;
+  border-radius: 15%;
+  font-family: 'Gill Sans MT';
+  font-weight: bold;
+  font-size: 26px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  top: 74%;
+  left: 45%;
+}
+
+.digitos-pantalla-cuenta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d9f2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.digitos-pantalla-cuenta h1 {
+  font-size: 6rem;
+  color: black;
+  text-align: center;
+  animation: zoomIn 0.5s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.texto-usuario {
+  font-size: 80px;
+  color: #000000;
+  padding: 0.5px;
+  border-radius: 8px;
+  margin-top: 0.5px;
+  height: 100px;
+  width: 800px;
+  word-wrap: break-word;
+}
+
+.digitos-pausa h2 {
+  font-family: 'Cooper Black';
+  text-align: center;
+  font-size: 30px;
+}
+
+.digitos-botones-pausa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-top: 2px;
+  border-radius: 15%;
+}
+
+.digitos-botones-pausa button {
+  width: 150px;
+  padding: 10px 10px;
+  font-size: 18px;
+  font-family: 'Gill Sans MT';
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #47a5b1;
+  color: white;
+}
+
+.digitos-botones-pausa button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
