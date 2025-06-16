@@ -3,13 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faBook } from "@fortawesome/free-solid-svg-icons";
 import "../styles/utils/GameHeader.css";
 
-function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, onPauseToggle, isPaused }) {
+function GameHeader({
+  score = 0,
+  onTimeEnd,
+  resetTimerSignal,
+  onPauseToggle,
+  onInstructionToggle,
+  isPaused,
+  isInstruction,
+}) {
   const TIEMPO_INICIAL = 90;
   const [timeLeft, setTimeLeft] = useState(TIEMPO_INICIAL);
   const timerRef = useRef(null);
 
   useEffect(() => {
-    if (isPaused) {
+    if (isPaused || isInstruction) {
       clearInterval(timerRef.current);
     } else {
       timerRef.current = setInterval(() => {
@@ -25,12 +33,12 @@ function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, onPauseToggle, isP
     }
 
     return () => clearInterval(timerRef.current);
-  }, [isPaused]);
+  }, [isPaused, isInstruction]);
 
   useEffect(() => {
     if (resetTimerSignal !== 0) {
       setTimeLeft(TIEMPO_INICIAL);
-      if (!isPaused) {
+      if (!isPaused || !isInstruction) {
         clearInterval(timerRef.current);
         timerRef.current = setInterval(() => {
           setTimeLeft((prev) => {
@@ -44,7 +52,7 @@ function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, onPauseToggle, isP
         }, 1000);
       }
     }
-  }, [resetTimerSignal, isPaused]);
+  }, [resetTimerSignal, isPaused, isInstruction]);
 
   return (
     <div className="game-header-container">
@@ -58,7 +66,7 @@ function GameHeader({ score = 0, onTimeEnd, resetTimerSignal, onPauseToggle, isP
         </div>
         <div className="timer-alert">
           <div className="timer">Tiempo: {timeLeft}</div>
-          <div className="icon alert">
+          <div className="icon-pause" onClick={onInstructionToggle}>
             <FontAwesomeIcon className="icono-game-header" icon={faBook} />
           </div>
         </div>

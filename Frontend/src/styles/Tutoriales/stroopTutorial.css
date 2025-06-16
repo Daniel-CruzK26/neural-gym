@@ -1,4 +1,4 @@
-.overlay {
+.overlay-instruction {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,35 +12,54 @@
   z-index: 1000;
 }
 
-.pause-menu {
+.stroop-tutorial {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  width: 400px;
-  height: 300px;
+  gap: 25px;
+  width: 650px;
+  height: 550px;
   background-color: #c8eeff;
   border-radius: 20px;
-  padding: 40px;
+  padding: 10px 40px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.pause-menu h2 {
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  color: #333;
+.stroop-tutorial h2 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: #2c2c2c;
 }
 
-.pause-menu button {
+.stroop-tutorial p {
+  color: #333;
+  font-size: 20px;
+}
+
+.stroop-tutorial-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.stroop-example {
+  width: 200px;
+  border-radius: 20px;
+  object-fit: contain;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.stroop-tutorial button {
   padding: 4px 40px;
   margin: 10px;
   box-sizing: content-box;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  height: 35px;
+  height: 40px;
   border-radius: 10px;
   border: none;
   text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
@@ -51,7 +70,7 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.pause-menu button:hover {
+.stroop-tutorial button:hover {
   background-color: #78aeea;
   transform: scale(1.05);
 }
