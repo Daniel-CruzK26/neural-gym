@@ -4,7 +4,7 @@ import StoopTest from "../components/Stoop";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import Pausa from "../components/Pausa";
-import StroopTutorial from "../components/StroopTutorial";
+import StroopTutorial from "../components/Tutoriales/StroopTutorial";
 import "../styles/StoopTest/StoopPage.css";
 
 export default function StoopPage() {

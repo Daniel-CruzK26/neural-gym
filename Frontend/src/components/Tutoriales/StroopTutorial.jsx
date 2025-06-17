@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Tutoriales/StroopTutorial.css";
+import "../../styles/Tutoriales/StroopTutorial.css";
 
 const StroopTutorial = ({ onResume }) => {
   return (

@@ -48,9 +48,8 @@ export default function SimbolosPage() {
     setInstructions((prev) => !prev);
   };
 
-  // Nueva función para regresar al menú principal
   const volverMenuPrincipal = () => {
-    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
+    navigate("/main-menu");
   };
 
   useEffect(() => {

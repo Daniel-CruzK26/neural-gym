@@ -12,14 +12,14 @@
   z-index: 1000;
 }
 
-.stroop-tutorial {
+.meaning-tutorial {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
-  width: 650px;
-  height: 550px;
+  gap: 20px;
+  width: 750px;
+  height: 620px;
   background-color: #c8eeff;
   border-radius: 20px;
   padding: 10px 40px;
@@ -28,33 +28,44 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.stroop-tutorial h2 {
-  margin-bottom: 30px;
+.meaning-tutorial h2 {
+  margin-bottom: 15px;
   font-size: 2.5rem;
   color: #2c2c2c;
 }
 
-.stroop-tutorial p {
+.meaning-tutorial p {
   color: #333;
   font-size: 20px;
   text-align: justify;
 }
 
-.stroop-tutorial-container {
+.meaning-tutorial-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 0.8rem;
 }
 
-.stroop-example {
-  width: 200px;
-  border-radius: 20px;
+.meaning-example {
+  width: 320px;
+  border-radius: 10px;
   object-fit: contain;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.stroop-tutorial button {
+.meaning-img-container {
+  display: flex;
+  align-items: center;
+  height: 230px;
+  box-sizing: border-box;
+}
+
+.meaning-text-container {
+  height: 140px;
+}
+
+.meaning-tutorial button {
   padding: 4px 40px;
   margin: 10px;
   box-sizing: content-box;
@@ -71,7 +82,14 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.stroop-tutorial button:hover {
+.meaning-tutorial button:hover {
   background-color: #78aeea;
   transform: scale(1.05);
+}
+
+.btns-container {
+  width: 480px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
 }

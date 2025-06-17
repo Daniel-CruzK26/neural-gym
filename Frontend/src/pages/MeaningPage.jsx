@@ -4,6 +4,7 @@ import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import { useNavigate } from "react-router-dom";
 import Pausa from "../components/Pausa";
+import MeaningTutorial from "../components/Tutoriales/MeaningTutoriales";
 import "../styles/Meaning/MeaningPage.css";
 
 export default function MeaningPage() {
@@ -13,7 +14,8 @@ export default function MeaningPage() {
   const [nivelActual, setNivel] = useState(6);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // 👈 PAUSA
+  const [isPaused, setIsPaused] = useState(false);
+  const [isInstruction, setInstructions] = useState(true);
   const meaningRef = useRef();
   const navigate = useNavigate();
 
@@ -37,6 +39,10 @@ export default function MeaningPage() {
     setIsPaused((prev) => !prev);
   };
 
+  const handleInstructionToggle = () => {
+    setInstructions((prev) => !prev);
+  };
+
   const volverMenuPrincipal = () => {
     navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
@@ -54,7 +60,9 @@ export default function MeaningPage() {
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
         onPauseToggle={handlePauseToggle}
+        onInstructionToggle={handleInstructionToggle}
         isPaused={isPaused}
+        isInstruction={isInstruction}
       />
 
       {/* 👇 Componente principal de prueba */}
@@ -65,6 +73,7 @@ export default function MeaningPage() {
         onRespuestaMedida={agregarTiempoRespuesta}
         onFinPruebas={incrementarNivel}
         isPaused={isPaused} // 👈 se pasa a MeaningTest
+        isInstruction={isInstruction}
       />
 
       {/* 👇 Resultados */}
@@ -85,6 +94,12 @@ export default function MeaningPage() {
             onResume={() => setIsPaused(false)}
             onExit={volverMenuPrincipal}
           />
+        </div>
+      )}
+
+      {isInstruction && (
+        <div className="overlay-instruction">
+          <MeaningTutorial onResume={() => setInstructions(false)} />
         </div>
       )}
     </div>
