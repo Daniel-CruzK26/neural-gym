@@ -12,14 +12,14 @@
   z-index: 1000;
 }
 
-.simbolos-tutorial {
+.tova-tutorial {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
   width: 750px;
-  height: 550px;
+  height: 620px;
   background-color: #c8eeff;
   border-radius: 20px;
   padding: 10px 40px;
@@ -28,42 +28,44 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.simbolos-tutorial h2 {
+.tova-tutorial h2 {
   margin-bottom: 30px;
   font-size: 2.5rem;
   color: #2c2c2c;
 }
 
-.simbolos-tutorial p {
+.tova-tutorial p {
   color: #333;
   font-size: 22px;
   text-align: justify;
 }
 
-.simbolos-tutorial-container {
+.tova-tutorial-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 }
 
-.simbolos-example {
-  width: 500px;
+.tova-example {
+  width: 200px;
   border-radius: 10px;
   object-fit: contain;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.simbols-img-container {
+.tova-img-container {
   display: flex;
   align-items: center;
-  height: 160px;
+  height: 230px;
+  box-sizing: border-box;
 }
 
-.simbols-text-container {
-  height: 110px;
+.tova-text-container {
+  height: 140px;
 }
 
-.simbolos-tutorial button {
+.tova-tutorial button {
   padding: 4px 40px;
   margin: 10px;
   box-sizing: content-box;
@@ -80,7 +82,7 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.simbolos-tutorial button:hover {
+.tova-tutorial button:hover {
   background-color: #78aeea;
   transform: scale(1.05);
 }

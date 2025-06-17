@@ -4,6 +4,7 @@ import GameHeader from "../components/GameHeader";
 import TovaTest from "../components/Tova";
 import Resultados from "../components/Resultados";
 import Pausa from "../components/Pausa";
+import TovaTutorial from "../components/Tutoriales/TovaTutorial";
 import "../styles/TOVA/TovaPage.css";
 
 export default function TovaPage() {
@@ -13,6 +14,7 @@ export default function TovaPage() {
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInstruction, setInstructions] = useState(true);
   const navigate = useNavigate();
   const tovaRef = useRef();
 
@@ -26,6 +28,10 @@ export default function TovaPage() {
 
   const handlePauseToggle = () => {
     setIsPaused((prev) => !prev);
+  };
+
+  const handleInstructionToggle = () => {
+    setInstructions((prev) => !prev);
   };
 
   const volverMenuPrincipal = () => {
@@ -58,16 +64,22 @@ export default function TovaPage() {
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
         isPaused={isPaused}
+        isInstruction={isInstruction}
         onPauseToggle={handlePauseToggle}
+        onInstructionToggle={handleInstructionToggle}
       />
-      <TovaTest
-        ref={tovaRef}
-        onCorrect={incrementarScore}
-        onRespuestaMedida={agregarTiempoRespuesta}
-        onIncorrect={respIncorrecta}
-        onFinPruebas={pasarNivel}
-        isPaused={isPaused}
-      />
+      {!isInstruction && (
+        <TovaTest
+          ref={tovaRef}
+          onCorrect={incrementarScore}
+          onRespuestaMedida={agregarTiempoRespuesta}
+          onIncorrect={respIncorrecta}
+          onFinPruebas={pasarNivel}
+          isPaused={isPaused}
+          isInstruction={isInstruction}
+        />
+      )}
+
       {isPaused && (
         <div className="overlay">
           <Pausa
@@ -84,6 +96,12 @@ export default function TovaPage() {
             onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
+        </div>
+      )}
+
+      {isInstruction && (
+        <div className="overlay-instruction">
+          <TovaTutorial onResume={() => setInstructions(false)} />
         </div>
       )}
     </div>
