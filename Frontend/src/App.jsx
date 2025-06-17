@@ -12,6 +12,7 @@ import NeuralGymHomePage from "./HomePage";
 import PrivateRoute from "./components/PrivateRoute";
 import MisScoresPage from "./pages/MisScoresPage";
 import DigitosGame from "./components/digitos/DigitosGame";
+import DigAppWrapper from "./pages/Digapp";
 
 function App() {
   return (
@@ -83,7 +84,7 @@ function App() {
             path="/digitos"
             element={
               <PrivateRoute>
-                <DigitosGame />
+                <DigAppWrapper />
               </PrivateRoute>
             }
           />
