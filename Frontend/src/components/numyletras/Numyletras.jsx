@@ -1,68 +1,60 @@
 import React, {useState, useEffect, useRef} from 'react';
-import Modal from './Modal';
-import "../../styles/Digitos/Navbar.css";
+import Modal from './Modalnum';
+import "../../styles/NumyLetras/Numvar.css";
+
 function Navbar() {
     const [tiempo, setTiempo] = useState(60);
     const[activo, setActivo] = useState(false);
     const[score, setScore] = useState(0);
     const[grabando, setGrabando] = useState(false);
-    
-    const mediaRecorderRef = useRef(null); 
-    const recordedChunksRef = useRef([]);
-    const mediaStreamRef = useRef(null); 
-    const recognitionRef = useRef(null); 
-
-    const grabAndRecognizeTriggered = useRef(false); 
-
+    const recorderRef = useRef(null); 
     const [numeros, setNumeros] = useState([]);
     const [modo, setModo] = useState('');
     const [transcripcion, setTranscripcion] = useState([]);
     const [mostrarResultado, setMostrarResultado] = useState(false);
     const [esCorrecto, setEsCorrecto] = useState(false);
-    const [mostrarNumeros, setMostrarNumeros] = useState(false); 
+    const [mostrarNumeros, setMostrarNumeros] = useState(false);
     const [juegoTerminado, setJuegoTerminado] = useState(false);
 
     const modosDisponibles = ["Memoriza", "Ordena de mayor a menor", "Ordena de menor a mayor"];
     const [cuentaRegresiva, setCuentaRegresiva] = useState(null);
+    const recognitionRef = useRef(null);
 
-    const [textoEnTiempoReal, setTextoEnTiempoReal] = useState(''); 
+    const [textoEnTiempoReal, setTextoEnTiempoReal] = useState('');
+    const [ultimaTranscripcionFinal, setUltimaTranscripcionFinal] = useState('');
+    const grabAndRecognizeTriggered = useRef(false);
     const [cargando, setCargando] = useState(false);
     const [puedeGrabar, setPuedeGrabar] = useState(false);
 
-    const [modoAbierto, setModalAbierto] = useState(true);
     const [modoModal, setModoModal] = useState('inicio');
+    const [modoAbierto, setModalAbierto] = useState(true);
     const [mostrarModalPausa, setMostrarModalPausa] = useState(false);
-    
-    const[resultadoAPI, setResultadoAPI] = useState(null); 
 
-    const currentRoundFullTextRef = useRef(''); 
+    const [resultadoAPI, setResultadoAPI] = useState(null);
+    const mediaStreamRef = useRef(null);
+
+    const currentRoundFullTextRef = useRef('');
     const stopInitiatedByUser = useRef(false); 
-    
+
     const limpiarRecursosDeGrabacion = () => {
         if (recognitionRef.current) {
-            recognitionRef.current.stop(); 
+            recognitionRef.current.stop();
             recognitionRef.current = null;
             console.log("SpeechRecognition detenido y referencia limpiada.");
         }
-        if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-            mediaRecorderRef.current.stop();
-            mediaRecorderRef.current = null;
-            console.log("MediaRecorder detenido y referencia limpiada.");
-        }
         if (mediaStreamRef.current) {
-            mediaStreamRef.current.getTracks().forEach(track => track.stop()); 
+            mediaStreamRef.current.getTracks().forEach(track => track.stop());
             mediaStreamRef.current = null;
             console.log("Stream del micrófono liberado y referencia limpiada.");
         }
-        setGrabando(false); 
+        setGrabando(false);
         grabAndRecognizeTriggered.current = false;
-        recordedChunksRef.current = [];
     };
 
     const detenerGrabacionYReconocimiento = () => {
-        if (grabando) { 
+        if (grabando && recognitionRef.current) {
             stopInitiatedByUser.current = true; 
-            limpiarRecursosDeGrabacion(); 
+            limpiarRecursosDeGrabacion();
             console.log("Detención iniciada por el usuario/juego.");
         } else {
             limpiarRecursosDeGrabacion();
@@ -71,114 +63,143 @@ function Navbar() {
 
     const iniciarGrabacionYReconocimiento = async () => {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            alert('getUserMedia no es compatible con tu navegador. Por favor, usa Chrome o Firefox.');
+            alert('getUserMedia no es compatible con tu navegador. Prueba con Chrome o Firefox.');
             return;
         }
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaStreamRef.current = stream;
 
-            const mediaRecorder = new MediaRecorder(stream);
-            mediaRecorderRef.current = mediaRecorder;
-            recordedChunksRef.current = [];
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Web Speech API no es compatible con tu navegador.");
+                stream.getTracks().forEach(track => track.stop());
+                mediaStreamRef.current = null;
+                return;
+            }
+            
+            const recognition = new SpeechRecognition();
+            recognitionRef.current = recognition;
 
-            mediaRecorder.ondataavailable = event => {
-                if (event.data.size > 0) {
-                    recordedChunksRef.current.push(event.data);
+            recognition.lang = "es-ES";
+            recognition.continuous = true; 
+            recognition.interimResults = true;
+
+            setTextoEnTiempoReal('');
+            setUltimaTranscripcionFinal('');
+            currentRoundFullTextRef.current = ''; 
+            grabAndRecognizeTriggered.current = true; 
+            stopInitiatedByUser.current = false; 
+
+            recognition.onresult = (event) => {
+            let interimTranscript = '';
+            let finalTranscript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                    console.log("RAW FINAL TRANSCRIPT PART:", transcript); 
+                } else {
+                    interimTranscript += transcript;
                 }
-            };
+            }
 
-            mediaRecorder.onstop = async () => {
-                const audioBlob = new Blob(recordedChunksRef.current, { type: 'audio/webm' });
-                console.log("MediaRecorder.onstop: Audio Blob listo para enviar.");
-                enviarAudioAlBackend(audioBlob);
-                recordedChunksRef.current = []; 
-            };
+            setTextoEnTiempoReal(interimTranscript); 
+            //console.log("INTERIM (real-time) text:", interimTranscript);
 
-            mediaRecorder.onerror = (event) => {
-                console.error("Error de MediaRecorder:", event.error);
-                alert('Error en la grabación de audio: ' + event.error.name);
+            if (finalTranscript) {
+                const trimmedFinal = finalTranscript.trim();
+                if (trimmedFinal) {
+                    currentRoundFullTextRef.current += trimmedFinal + ' ';
+                    //console.log("Segmento final acumulado:", trimmedFinal); 
+                    //console.log("Current FULL accumulated text:", currentRoundFullTextRef.current); 
+                }
+                setUltimaTranscripcionFinal(currentRoundFullTextRef.current.trim()); 
+            }
+        };
+
+            recognition.onerror = (event) => {
+                console.error("Error de reconocimiento de voz:", event.error);
+                let errorMessage = "";
+                if(event.error === 'no-speech'){
+                    errorMessage = "No se detectó voz. Por favor, asegúrate de hablar claro.";
+                } else if (event.error === 'aborted'){
+                    errorMessage = "La grabación fue cancelada.";
+                } else if (event.error === 'audio-capture'){
+                    errorMessage = "Problema con el micrófono. Asegúrate de que esté conectado y no esté en uso por otra aplicación.";
+                } else if (event.error === 'not-allowed') {
+                    errorMessage = "Permiso de micrófono denegado. Por favor, habilítalo en la configuración de tu navegador.";
+                } else {
+                    errorMessage = "Ocurrió un error inesperado en el reconocimiento de voz: " + event.error;
+                }
+                alert(errorMessage);
+                stopInitiatedByUser.current = true;
                 limpiarRecursosDeGrabacion();
             };
 
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (SpeechRecognition) {
-                const recognition = new SpeechRecognition();
-                recognitionRef.current = recognition;
+            recognition.onend = () => {
+                console.log("Recognition onend fired. 'grabando' state (before cleanup):", grabando);
+                console.log("stopInitiatedByUser.current:", stopInitiatedByUser.current);
+                console.log("grabAndRecognizeTriggered.current:", grabAndRecognizeTriggered.current);
 
-                recognition.lang = "es-ES";
-                recognition.continuous = true; 
-                recognition.interimResults = true;
-
-                recognition.onresult = (event) => {
-                    let interimTranscript = '';
-                    for (let i = event.resultIndex; i < event.results.length; ++i) {
-                        interimTranscript += event.results[i][0].transcript;
+                if (stopInitiatedByUser.current || (grabando && grabAndRecognizeTriggered.current)) {
+                    const textToSend = currentRoundFullTextRef.current.trim();
+                    console.log("ONEND: Texto final para enviar:", textToSend, "Length:", textToSend.length);
+                    
+                    if (textToSend || grabAndRecognizeTriggered.current) {
+                        enviarTranscripcionAlBackend(textToSend);
                     }
-                    setTextoEnTiempoReal(interimTranscript);
-                };
+                }
+                currentRoundFullTextRef.current = ''; 
+                stopInitiatedByUser.current = false;
+            };
 
-                recognition.onerror = (event) => {
-                    console.error("Error de reconocimiento de voz (real-time):", event.error);
-                };
-
-                recognition.onend = () => {
-                    console.log("SpeechRecognition.onend fired.");
-                    if (!stopInitiatedByUser.current) { 
-                        console.log("SpeechRecognition terminó inesperadamente.");
-                        setGrabando(false);
-                    }
-                };
-                recognition.start(); 
-            } else {
-                console.warn("Web Speech API no es compatible con tu navegador. El texto en tiempo real no estará disponible.");
-            }
-            
-            mediaRecorder.start();
+            recognition.start();
             setGrabando(true);
-            console.log("Grabación de audio y SpeechRecognition iniciados.");
+            console.log("SpeechRecognition iniciado en modo continuo.");
 
         } catch (error) {
             console.error("Error al acceder al micrófono o iniciar grabación:", error);
             alert('Error al acceder al micrófono: ' + error.message);
             setGrabando(false);
-            limpiarRecursosDeGrabacion();
+            limpiarRecursosDeGrabacion(); 
+            currentRoundFullTextRef.current = '';
         }
     };
 
-    const enviarAudioAlBackend = async (audioBlob) => {
+    const enviarTranscripcionAlBackend = async (transcripcionTexto) => {
         setCargando(true);
         setMostrarNumeros(false);
 
         const formData = new FormData();
-        formData.append('audio', audioBlob, 'grabacion.webm');
+        formData.append('transcripcion_texto', transcripcionTexto);
         formData.append('modo', modo);
         formData.append('numeros', JSON.stringify(numeros));
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/digitos/procesar_audio/', {
+            const response = await fetch('http://127.0.0.1:8000/numyletras/procesar_texto/', {
                 method: 'POST',
                 body: formData,
             });
 
             if (!response.ok) {
-                const errorData = await response.json(); 
+                const errorData = await response.json();
                 throw new Error(`Error del servidor: ${errorData.error || response.statusText}`);
             }
 
             const data = await response.json();
-            console.log("Respuesta de la API:", data);
             setResultadoAPI(data);
             setTranscripcion(data.transcripcion);
             setEsCorrecto(data.correcto);
             setScore(prevScore => prevScore + data.puntos);
             setMostrarResultado(true);
         } catch (error) {
-            console.error('Error al enviar el audio:', error);
-            alert('Error al procesar el audio: ' + error.message);
+            console.error('Error al enviar la transcripción:', error);
+            alert('Error al procesar la transcripción: ' + error.message);
             setMostrarResultado(true);
             setEsCorrecto(false);
-            setTranscripcion(textoEnTiempoReal ? textoEnTiempoReal.split(" ") : ["Error de red/servidor"]);
+            setTranscripcion(transcripcionTexto ? [transcripcionTexto] : ["Error de red/servidor"]);
         } finally {
             setCargando(false);
             setTimeout(generarRonda, 2000); 
@@ -187,9 +208,9 @@ function Navbar() {
 
     const iniciarJuego = () => {
         setModalAbierto(false);
-        setModoModal('inicio'); 
+        setModoModal('inicio');
         setJuegoTerminado(false); 
-        setTiempo(60);             
+        setTiempo(60);            
         setScore(0); 
         setCuentaRegresiva(3);
 
@@ -200,8 +221,8 @@ function Navbar() {
                     setCuentaRegresiva("¡Comencemos!");
                     setTimeout(() => {
                         setCuentaRegresiva(null);
-                        generarRonda(); 
-                        setActivo(true); 
+                        generarRonda();
+                        setActivo(true);
                     }, 1000);
                 }
                 return typeof prev === 'number' ? prev - 1 : prev;
@@ -211,17 +232,17 @@ function Navbar() {
 
     const toggleActivo = () => {
         if (activo) {
-            setActivo(false); 
+            setActivo(false);
             setMostrarModalPausa(true);
-            detenerGrabacionYReconocimiento(); 
+            detenerGrabacionYReconocimiento();
         } else {
             setActivo(true);
-            setMostrarModalPausa(false); 
+            setMostrarModalPausa(false);
         }
     };
 
     const reiniciarJuego = () => {
-        detenerGrabacionYReconocimiento();
+        detenerGrabacionYReconocimiento(); 
         setTiempo(60);
         setScore(0);
         setJuegoTerminado(false);
@@ -235,7 +256,7 @@ function Navbar() {
                     setCuentaRegresiva("¡Comencemos!");
                     setTimeout(() => {
                         setCuentaRegresiva(null);
-                        generarRonda(); 
+                        generarRonda();
                         setActivo(true);
                     }, 1000);
                 }
@@ -245,46 +266,54 @@ function Navbar() {
     };
 
     const mostrarAyuda = () => {
-        setModoModal('ayuda');
-        setModalAbierto(true);
-        setActivo(false);
-        detenerGrabacionYReconocimiento();
+            setModoModal('ayuda');
+            setModalAbierto(true);
+            setActivo(false);
+            detenerGrabacionYReconocimiento();
     };
 
-    function generarNumeros() {
+    function generarSecuenciaMixta() {
         const posiblesNumeros = Array.from({ length: 9 }, (_, i) => i + 1);
-        const secuencia = [];
+        const posiblesLetras = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        const mezcla = [];
 
-        while (secuencia.length < 5) {
-            const randomIndex = Math.floor(Math.random() * posiblesNumeros.length);
-            const numero = posiblesNumeros.splice(randomIndex, 1)[0]; 
-            secuencia.push(numero);
+        while (mezcla.length < 5) {
+            const usarLetra = Math.random() < 0.5;
+            if (usarLetra && posiblesLetras.length > 0) {
+                const letra = posiblesLetras.splice(Math.floor(Math.random() * posiblesLetras.length), 1)[0];
+                mezcla.push(letra);
+            } else if (posiblesNumeros.length > 0) {
+                const numero = posiblesNumeros.splice(Math.floor(Math.random() * posiblesNumeros.length), 1)[0];
+                mezcla.push(numero);
+            }
         }
-        return secuencia;
+        return mezcla;
     }
         
     const generarRonda = () => {
-        limpiarRecursosDeGrabacion(); 
+        limpiarRecursosDeGrabacion();
         setTextoEnTiempoReal('');
-        
-        const nuevosNumeros = generarNumeros();
+        setUltimaTranscripcionFinal('');
+
+        if(!activo && cuentaRegresiva == null && !juegoTerminado) {}
+
+        const nuevosNumeros = generarSecuenciaMixta();
         const nuevoModo = modosDisponibles[Math.floor(Math.random() * modosDisponibles.length)];
 
         setNumeros(nuevosNumeros);
         setModo(nuevoModo);
 
-        setMostrarResultado(false); 
+        setMostrarResultado(false);
         setEsCorrecto(false);
         setTranscripcion([]);
-        setGrabando(false); 
-        setPuedeGrabar(false); 
+        setGrabando(false);    
+        setPuedeGrabar(false);
         setResultadoAPI(null);
 
-        currentRoundFullTextRef.current = ''; 
+        currentRoundFullTextRef.current = '';
 
-        setMostrarNumeros(true); 
+        setMostrarNumeros(true);
     };
-
 
     useEffect(() => {
         let timer;
@@ -294,7 +323,7 @@ function Navbar() {
             }, 1000);
         } else if (tiempo <= 0 && !juegoTerminado) {
             setJuegoTerminado(true);
-            setActivo(false); 
+            setActivo(false);
             detenerGrabacionYReconocimiento();
         }
         return () => clearInterval(timer);
@@ -304,38 +333,31 @@ function Navbar() {
         let timer;
         if (activo && mostrarNumeros) {
             timer = setTimeout(() => {
-                setMostrarNumeros(false); 
-                setPuedeGrabar(true); 
-            }, 5000); 
+                setMostrarNumeros(false);
+                setPuedeGrabar(true);
+            }, 5000);
         }
         return () => clearTimeout(timer);
     }, [mostrarNumeros, activo]);
 
     useEffect(() => {
-        if (activo && !juegoTerminado && !grabando && !mostrarResultado && !cargando && puedeGrabar && !mediaRecorderRef.current) {
-            console.log("useEffect: Condiciones para iniciar grabación met.");
+        if (activo && !juegoTerminado && !grabando && !mostrarResultado && !cargando && puedeGrabar && !recognitionRef.current) {
+            console.log("useEffect: Condiciones para iniciar grabación met.")
             const delayBeforeRecording = setTimeout(() => {
                 iniciarGrabacionYReconocimiento();
-            }, 500); 
+            }, 500);
             return () => clearTimeout(delayBeforeRecording);
         } 
         if (grabando && (!activo || juegoTerminado || mostrarResultado || cargando || !puedeGrabar)) {
             console.log("useEffect: Condiciones para detener grabación met.");
-
-            if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-                stopInitiatedByUser.current = true; 
-                mediaRecorderRef.current.stop(); 
-            }
-            if (recognitionRef.current) {
-                recognitionRef.current.stop();
-            }
-            setGrabando(false);
+            limpiarRecursosDeGrabacion();
         }
-    }, [activo, juegoTerminado, grabando, mostrarResultado, cargando, puedeGrabar]); 
+    }, [activo, juegoTerminado, grabando, mostrarResultado, cargando, puedeGrabar]);
 
     useEffect(() => {
         return () => {
-            limpiarRecursosDeGrabacion();
+            limpiarRecursosDeGrabacion(); 
+            currentRoundFullTextRef.current = '';
         };
     }, []); 
 
@@ -346,18 +368,18 @@ function Navbar() {
                 <Modal isOpen={modoAbierto} onClose={() => setModalAbierto(false)}>
                     {modoModal === 'inicio' ? (
                         <>
-                            <h2>PRUEBA DÍGITOS</h2> 
+                            <h2>PRUEBA LETRAS Y NÚMEROS</h2>
                             <br></br>
-                            <p>Esta prueba estimula la resistencia a la distracción, la memoria inmediata y la memoria de trabajo.</p>
+                            <p>Esta prueba evalúa la atención, concentración y memoria de trabajo.</p>
                             <br></br>
                             <h5>Lee atentamente las instrucciones:</h5>
                             <ol style={{ textAlign: 'justify' }}>
-                                <li>Se presentan una serie de números.</li> 
-                                <li>Memoriza o repite los números en el orden indicado.</li> 
-                                <li>Luego, di tu respuesta en voz alta cuando comience la grabación.</li>
+                                <li>Se presentan una serie de números y letras.</li>
+                                <li>Memoriza u ordena en tu mente la serie de numeros y letras que se te muestran (Recuerda que las letras son según el orden alfabético) </li>
+                                <li>PRIMERO DI LOS NÚMEROS Y LUEGO LAS LETRAS cuando comience la grabación.</li>
                                 <li>Da click en detener cuando hayas terminado de decir tu respuesta.</li>
                                 <li>Se te mostrará si la respuesta es correcta o incorrecta.</li>
-                                <li>Ganas puntos por cada respuesta correcta.</li>
+                                <li>Ganas puntos por cada respuesta correcta, SUERTE!!!</li>
                             </ol>
                             <div className = 'botoncomenzar'>
                             <button onClick={iniciarJuego} disabled={cuentaRegresiva !== null}>Comenzar</button> 
@@ -370,8 +392,8 @@ function Navbar() {
                             <p>Esta prueba evalúa la atención, concentración y memoria de trabajo.</p>
                             <br></br>
                             <ul style={{ textAlign: 'left' }}>
-                                <li> Observa la secuencia de números que aparece por 5 segundos.</li> 
-                                <li> Cuando empiece la grabación, di la secuencia según la instrucción mostrada y da click en detener cuando hayas terminado.</li>
+                                <li> Observa la secuencia de números o letras que aparece por 5 segundos.</li>
+                                <li> Cuando empiece la grabación, di la secuencia comenzando con los NÚMEROS, según la instrucción mostrada y da click en detener cuando hayas terminado.</li>
                                 <li> Si aciertas, ganas puntos. Si te equivocas, no pasa nada. ¡Sigue intentando!</li>
                             </ul>
                             <br></br>
@@ -417,13 +439,13 @@ function Navbar() {
                     ) : (mostrarNumeros && activo) ? (
                             <>
                                 <h5>{modo}</h5>
-                                <p>{numeros.join(" ")}</p> 
+                                <p>{numeros.map(n => typeof n === 'string' ? n.toUpperCase() : n).join(" ")}</p>
                             </>
                         ) : mostrarResultado ? (
                             <>
                                 <h3>{esCorrecto ? '✅ Correcto' : '❌ Incorrecto'}</h3>
                                 <br></br>
-                                <h6><strong>Dijiste:</strong> {Array.isArray(transcripcion) ? transcripcion.join(" ").toUpperCase() : "Sin transcripción"}</h6>
+                                <h6><strong>Dijiste: </strong> {(transcripcion.join(" ")).toUpperCase() || "Sin transcripción"}</h6>
                                 <br></br>
                                 <h6><strong>Respuesta correcta: </strong>{resultadoAPI && resultadoAPI.esperado ? (resultadoAPI.esperado.join(" ")).toUpperCase() : "Cargando..."}</h6>
                             </>
@@ -454,5 +476,4 @@ function Navbar() {
         </div>
     );
 };
-
 export default Navbar;

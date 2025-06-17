@@ -11,6 +11,8 @@ import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
 import PrivateRoute from "./components/PrivateRoute";
 import MisScoresPage from "./pages/MisScoresPage";
+import Digitos from "./components/digitos/Digitos_Nav"
+import Numyletras from "./components/numyletras/Numyletras"
 
 function App() {
   return (
@@ -75,6 +77,22 @@ function App() {
             element={
               <PrivateRoute>
                 <MisScoresPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/digitos"
+            element={
+              <PrivateRoute>
+                <Digitos/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/numyletras"
+            element={
+              <PrivateRoute>
+                <Numyletras/>
               </PrivateRoute>
             }
           />

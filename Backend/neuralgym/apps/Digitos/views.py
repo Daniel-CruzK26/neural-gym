@@ -17,7 +17,8 @@ import re # Necesario para re.findall y string.punctuation
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
 
 try:
-    vosk_model = Model("myApp/vosk-model-es-0.42")
+    #vosk_model = Model("/vosk-model-es-0.42")
+    vosk_model = Model("/Users/valer/OneDrive/Documentos/Digitos/BackendDGT/memoria/myApp/vosk-model-es-0.42")
 except Exception as e:
     print(f"Error al cargar el modelo Vosk: {e}")
 
