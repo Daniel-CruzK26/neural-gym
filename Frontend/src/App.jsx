@@ -11,8 +11,8 @@ import MainMenu from "./pages/mainMenu";
 import NeuralGymHomePage from "./HomePage";
 import PrivateRoute from "./components/PrivateRoute";
 import MisScoresPage from "./pages/MisScoresPage";
-import DigitosGame from "./components/digitos/DigitosGame";
 import DigAppWrapper from "./pages/Digapp";
+import LYNAppWrapper from "./pages/LYNApp";
 
 function App() {
   return (
@@ -85,6 +85,14 @@ function App() {
             element={
               <PrivateRoute>
                 <DigAppWrapper />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/nums-letras"
+            element={
+              <PrivateRoute>
+                <LYNAppWrapper />
               </PrivateRoute>
             }
           />

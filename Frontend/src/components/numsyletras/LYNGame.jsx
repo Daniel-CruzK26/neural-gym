@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import Modal from './Modal';
 import '../../styles/NumsYLetras/LYN_Navbar.css';
 
-function Navbar() {
+function LYNGame() {
     const [tiempo, setTiempo] = useState(60);
     const[activo, setActivo] = useState(false);
     const[score, setScore] = useState(0);
@@ -178,7 +178,7 @@ function Navbar() {
         formData.append('numeros', JSON.stringify(numeros));
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/procesar_texto/', {
+            const response = await fetch('http://127.0.0.1:8000/api/letras/procesar_texto/', {
                 method: 'POST',
                 body: formData,
             });
@@ -362,8 +362,8 @@ function Navbar() {
     }, []); 
 
     return (
-        <div className='navbar-container'>
-            <div className = 'instrucciones'>
+        <div className='lyn-root'>
+            <div className = 'lyn-instrucciones'>
             {modoAbierto && (
                 <Modal isOpen={modoAbierto} onClose={() => setModalAbierto(false)}>
                     {modoModal === 'inicio' ? (
@@ -381,7 +381,7 @@ function Navbar() {
                                 <li>Se te mostrará si la respuesta es correcta o incorrecta.</li>
                                 <li>Ganas puntos por cada respuesta correcta, SUERTE!!!</li>
                             </ol>
-                            <div className = 'botoncomenzar'>
+                            <div className = 'lyn-botoncomenzar'>
                             <button onClick={iniciarJuego} disabled={cuentaRegresiva !== null}>Comenzar</button> 
                             </div>
                         </>
@@ -403,12 +403,12 @@ function Navbar() {
                 </Modal>
             )}
             </div>
-            <div className = 'Pausa'>
+            <div className = 'lyn-pausa'>
             {mostrarModalPausa && (
                 <Modal isOpen={mostrarModalPausa} onClose={() => setMostrarModalPausa(false)}>
                     <h2>Prueba en pausa</h2>
                     <br></br>
-                    <div className = 'botonesPausa'>
+                    <div className = 'lyn-botones-pausa'>
                     <button onClick={toggleActivo}>Reanudar</button>
                     <br></br>
                     <button onClick={reiniciarJuego}>Reintentar</button>
@@ -421,19 +421,19 @@ function Navbar() {
             )}
             </div>
             {cuentaRegresiva !== null ? (
-                <div className="pantalla-cuenta">
+                <div className="lyn-pantalla-cuenta">
                     <h1>{cuentaRegresiva}</h1>
                 </div>
             ) : juegoTerminado ? (
-                <div className="pantalla-final">
+                <div className="lyn-pantalla-final">
                     <h2>⏱️ TIEMPO TERMINADO</h2>
                     <p>Tu puntaje final fue: <strong>{score}</strong></p>
                 </div>
             ) : (
-                <div className='navbar'>
-                    <div className="Numeros">
+                <div className='lyn-navbar'>
+                    <div className="lyn-numeros">
                     {cargando ? (
-                    <div className = "pantalla-cargando">
+                    <div className = "lyn-cargando">
                         <h3>Evaluando respuesta...</h3>
                     </div>
                     ) : (mostrarNumeros && activo) ? (
@@ -452,22 +452,22 @@ function Navbar() {
                         ) : null}
                     </div>
 
-                    <button className='boton-pausa' onClick={toggleActivo}>
+                    <button className='lyn-boton-pausa' onClick={toggleActivo}>
                         {activo ? "⏸" : "▶️"} 
                     </button>
 
-                    <div className='tiempo'>{tiempo}</div>
+                    <div className='lyn-tiempo'>{tiempo}</div>
 
-                    <div className='Score'>Score:{score}</div>
+                    <div className='lyn-score'>Score:{score}</div>
 
-                    <button className="boton-ayuda" onClick={mostrarAyuda}>
+                    <button className="lyn-boton-ayuda" onClick={mostrarAyuda}>
                         !
                     </button>
 
                     {grabando && !mostrarResultado && (
-                        <div className="grabando-voz">
+                        <div className="lyn-grabando-voz">
                             <h6>Escuchando...</h6>
-                            <p className = "texto-usuario"> {textoEnTiempoReal.toUpperCase()}</p>
+                            <p className = "lyn-texto-usuario"> {textoEnTiempoReal.toUpperCase()}</p>
                             <button onClick = {detenerGrabacionYReconocimiento}>🟥 Detener</button>
                         </div>
                     )}
@@ -476,4 +476,4 @@ function Navbar() {
         </div>
     );
 };
-export default Navbar;
+export default LYNGame;

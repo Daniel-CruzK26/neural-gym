@@ -22,6 +22,7 @@ class ActivitySerializer(serializers.ModelSerializer):
             'TOVA': '/tova-test',
             'Signos': '/simbols-test',
             'Significado': '/meaning-test',
+            'Números y Letras': '/nums-letras',
         }
 
         return rutas.get(obj.name, '/')  # fallback si no hay match

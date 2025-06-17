@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import DigitosGame from './componentes/digitos/DigitosGame';
-import Modal from './componentes/digitos/Modal';
+import DigitosGame from '../components/digitos/DigitosGame';
+import Modal from '../components/digitos/Modal';
 import '../styles/Digitos/Digapp.css';
 
 export default function DigAppWrapper() {
