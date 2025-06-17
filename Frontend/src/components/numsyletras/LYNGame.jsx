@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Modal from './Modal';
-import './Navbar.css';
+import '../../styles/NumsYLetras/LYN_Navbar.css';
 
 function Navbar() {
     const [tiempo, setTiempo] = useState(60);

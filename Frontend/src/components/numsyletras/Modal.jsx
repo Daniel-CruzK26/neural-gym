@@ -1,5 +1,5 @@
 import React from 'react';
-import './Modal.css';
+import '../../styles/NumsYLetras/Modal.css';
 
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
