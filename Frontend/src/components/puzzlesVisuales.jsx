@@ -7,7 +7,16 @@ import React, {
 import "../styles/PuzzlesVisuales/Puzzles.css";
 
 const PuzzleVisualGame = forwardRef(
-  ({ onCorrect, onRespuestaMedida, onPuzzlesCompletados, isPaused }, ref) => {
+  (
+    {
+      onCorrect,
+      onRespuestaMedida,
+      onPuzzlesCompletados,
+      isPaused,
+      isInstruction,
+    },
+    ref
+  ) => {
     const [piezas, setPiezas] = useState({
       figura_base: "",
       correctas: [],
@@ -50,15 +59,8 @@ const PuzzleVisualGame = forwardRef(
       obtenerPuzzle();
     }, []);
 
-    // 🔥 Esto expone una función `reiniciarPuzzle()` al padre
-    useImperativeHandle(ref, () => ({
-      reiniciarPuzzle() {
-        obtenerPuzzle();
-      },
-    }));
-
     const toggleSeleccion = (index) => {
-      if (isPaused) return;
+      if (isPaused || isInstruction) return;
       let nuevas;
 
       if (seleccionadas.includes(index)) {

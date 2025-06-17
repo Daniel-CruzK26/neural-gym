@@ -5,12 +5,14 @@ import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import Pausa from "../components/Pausa";
 import "../styles/Simbolos/SimbolosPage.css";
+import SimbolosTutorial from "../components/Tutoriales/simbolosTutorial";
 
 export default function SimbolosPage() {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const [incorrectas, setIncorrectas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
+  const [isInstruction, setInstructions] = useState(true);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -42,6 +44,10 @@ export default function SimbolosPage() {
     setIsPaused((prev) => !prev);
   };
 
+  const handleInstructionToggle = () => {
+    setInstructions((prev) => !prev);
+  };
+
   // Nueva función para regresar al menú principal
   const volverMenuPrincipal = () => {
     navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
@@ -60,7 +66,9 @@ export default function SimbolosPage() {
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
         isPaused={isPaused}
+        isInstruction={isInstruction}
         onPauseToggle={handlePauseToggle}
+        onInstructionToggle={handleInstructionToggle}
       />
 
       <SimbolosTest
@@ -70,6 +78,7 @@ export default function SimbolosPage() {
         onIncorrect={respIncorrecta}
         onFinPruebas={pasarNivel}
         isPaused={isPaused}
+        isInstruction={isInstruction}
       />
 
       {isPaused && (
@@ -89,6 +98,12 @@ export default function SimbolosPage() {
             onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
+        </div>
+      )}
+
+      {isInstruction && (
+        <div className="overlay-instruction">
+          <SimbolosTutorial onResume={() => setInstructions(false)} />
         </div>
       )}
     </div>

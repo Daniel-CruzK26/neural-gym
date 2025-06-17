@@ -5,6 +5,7 @@ import Resultados from "../components/Resultados";
 import { useNavigate } from "react-router-dom";
 import Pausa from "../components/Pausa";
 import "../styles/PuzzlesVisuales/PuzzlesPage.css";
+import PuzzlesTutorial from "../components/puzzlesTutorial";
 
 export default function PuzzlePage() {
   const [score, setScore] = useState(0);
@@ -13,6 +14,7 @@ export default function PuzzlePage() {
   const [causaFinalizacion, setCausaFinalizacion] = useState("");
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false); // ✅ Estado para pausa
+  const [isInstruction, setInstructions] = useState(true);
 
   const puzzleRef = useRef();
   const navigate = useNavigate();
@@ -34,6 +36,10 @@ export default function PuzzlePage() {
     setIsPaused((prev) => !prev);
   };
 
+  const handleInstructionToggle = () => {
+    setInstructions((prev) => !prev);
+  };
+
   const volverMenuPrincipal = () => {
     navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
   };
@@ -52,16 +58,18 @@ export default function PuzzlePage() {
         resetTimerSignal={resetTimerSignal}
         isPaused={isPaused}
         onPauseToggle={handlePauseToggle}
+        onInstructionToggle={handleInstructionToggle}
+        isInstruction={isInstruction}
       />
 
-      {!isPaused && (
-        <PuzzleVisualGame
-          ref={puzzleRef}
-          onCorrect={incrementarScore}
-          onRespuestaMedida={agregarTiempoRespuesta}
-          onPuzzlesCompletados={onPuzzlesCompletados}
-        />
-      )}
+      <PuzzleVisualGame
+        ref={puzzleRef}
+        onCorrect={incrementarScore}
+        onRespuestaMedida={agregarTiempoRespuesta}
+        onPuzzlesCompletados={onPuzzlesCompletados}
+        isPaused={isPaused}
+        isInstruction={isInstruction}
+      />
 
       {isPaused && (
         <div className="overlay">
@@ -80,6 +88,12 @@ export default function PuzzlePage() {
             onContinuar={volverMenuPrincipal}
             causa={causaFinalizacion}
           />
+        </div>
+      )}
+
+      {isInstruction && (
+        <div className="overlay-instruction">
+          <PuzzlesTutorial onResume={() => setInstructions(false)} />
         </div>
       )}
     </div>

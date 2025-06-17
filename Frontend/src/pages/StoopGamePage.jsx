@@ -4,6 +4,7 @@ import StoopTest from "../components/Stoop";
 import GameHeader from "../components/GameHeader";
 import Resultados from "../components/Resultados";
 import Pausa from "../components/Pausa";
+import StroopTutorial from "../components/StroopTutorial";
 import "../styles/StoopTest/StoopPage.css";
 
 export default function StoopPage() {
@@ -15,6 +16,7 @@ export default function StoopPage() {
   const [incorrectSeguidos, setIncorrectos] = useState(0);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInstruction, setInstructions] = useState(true);
   const navigate = useNavigate();
   const stoopRef = useRef();
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
@@ -27,8 +29,12 @@ export default function StoopPage() {
     setIsPaused((prev) => !prev);
   };
 
+  const handleInstructionToggle = () => {
+    setInstructions((prev) => !prev);
+  };
+
   const volverMenuPrincipal = () => {
-    navigate("/main-menu"); // Cambia "/" por la ruta que sea tu menú principal
+    navigate("/main-menu");
   };
 
   const incrementarScore = () => {
@@ -91,7 +97,9 @@ export default function StoopPage() {
         onTimeEnd={onTimeEnd}
         resetTimerSignal={resetTimerSignal}
         onPauseToggle={handlePauseToggle}
+        onInstructionToggle={handleInstructionToggle}
         isPaused={isPaused}
+        isInstruction={isInstruction}
       />
 
       {showResultados && (
@@ -111,6 +119,7 @@ export default function StoopPage() {
         onRespuestaMedida={agregarTiempoRespuesta}
         onIncorrect={respIncorrecta}
         isPaused={isPaused}
+        isInstruction={isInstruction}
       />
 
       {isPaused && (
@@ -119,6 +128,12 @@ export default function StoopPage() {
             onResume={() => setIsPaused(false)}
             onExit={volverMenuPrincipal}
           />
+        </div>
+      )}
+
+      {isInstruction && (
+        <div className="overlay-instruction">
+          <StroopTutorial onResume={() => setInstructions(false)} />
         </div>
       )}
     </div>
