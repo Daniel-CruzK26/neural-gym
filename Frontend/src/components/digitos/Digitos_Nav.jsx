@@ -501,6 +501,17 @@ function Navbar() {
         </div>
       ) : (
         <div className="digitos-navbar">
+          <button className="boton-pausa" onClick={toggleActivo}>
+            {activo ? "⏸" : "▶️"}
+          </button>
+
+          <div className="tiempo">{tiempo}</div>
+
+          <div className="Score">Score:{score}</div>
+
+          <button className="boton-ayuda" onClick={mostrarAyuda}>
+            !
+          </button>
           <div className="Numeros">
             {cargando ? (
               <div className="pantalla-cargando">
@@ -531,18 +542,6 @@ function Navbar() {
               </>
             ) : null}
           </div>
-
-          <button className="boton-pausa" onClick={toggleActivo}>
-            {activo ? "⏸" : "▶️"}
-          </button>
-
-          <div className="tiempo">{tiempo}</div>
-
-          <div className="Score">Score:{score}</div>
-
-          <button className="boton-ayuda" onClick={mostrarAyuda}>
-            !
-          </button>
 
           {grabando && !mostrarResultado && (
             <div className="grabando-voz">

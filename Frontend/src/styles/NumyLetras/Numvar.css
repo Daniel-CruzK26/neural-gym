@@ -1,8 +1,7 @@
 .nums-navbar {
   background-color: #4e869a;
   height: 50px;
-  margin-bottom: 700px;
-  margin-left: 290px;
+  margin: 40px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,9 +15,8 @@
 .nums-navbar-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  height: auto;
-  max-width: 1500px;
+  height: 100vh;
+  width: 100vw;
   background-color: transparent;
 }
 
