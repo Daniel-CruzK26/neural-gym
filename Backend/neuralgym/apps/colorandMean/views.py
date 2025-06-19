@@ -39,7 +39,7 @@ class ColorMeanTest(viewsets.GenericViewSet):
         name_colores = [color[0] for color in hexs]
         total_palabras = name_figuras + name_colores
         pruebas = []
-        for _ in range(10):
+        for _ in range(15):
             obj = random.choice(['SIGNIFICADO', 'COLOR'])
             if obj == 'SIGNIFICADO':
                 word = random.choice(name_figuras)

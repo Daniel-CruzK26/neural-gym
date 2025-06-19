@@ -4,17 +4,26 @@ import React, {
   forwardRef,
   useEffect,
 } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import IconoSVG from "./Icono";
 import "../styles/Simbolos/Simbolos.css";
 
 const SimbolosTest = forwardRef(
   (
-    { onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused },
+    {
+      onCorrect,
+      onRespuestaMedida,
+      onIncorrect,
+      incrementarPruebas,
+      onFinPruebas,
+      isPaused,
+    },
     ref
   ) => {
     const [game, setGame] = useState([]);
     const [pruebaActual, setPruebaActual] = useState({});
     const [seleccionada, setSeleccionada] = useState("");
+    const [anteriores, setAnteriores] = useState([]);
     const [nombres, setNombres] = useState([]);
     const [letras, setLetras] = useState([]);
     const [ocultas, setOcultas] = useState([]);
@@ -24,6 +33,49 @@ const SimbolosTest = forwardRef(
     const [tiempoInicio, setTiempoInicio] = useState(Date.now());
 
     const sumIterador = () => setIterador((prev) => prev + 1);
+
+    const calcularIdx = () => {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * game.length);
+      } while (anteriores.includes(idx));
+      return idx;
+    };
+
+    const nuevoIcono = () => {
+      const idx = calcularIdx();
+      setPruebaActual(game[idx]);
+
+      if (anteriores.length < game.length - 2) {
+        setAnteriores([...anteriores, idx]);
+      } else {
+        let ants = [...anteriores];
+        ants.shift();
+        ants.push(idx);
+        setAnteriores(ants);
+      }
+      return;
+    };
+
+    const moverElemento = (indice, direccion) => {
+      setGame((prevGame) => {
+        const nuevoArreglo = [...prevGame];
+
+        if (direccion === "adelante") {
+          [nuevoArreglo[indice], nuevoArreglo[indice + 1]] = [
+            nuevoArreglo[indice + 1],
+            nuevoArreglo[indice],
+          ];
+        } else if (direccion === "atras") {
+          [nuevoArreglo[indice], nuevoArreglo[indice - 1]] = [
+            nuevoArreglo[indice - 1],
+            nuevoArreglo[indice],
+          ];
+        }
+
+        return nuevoArreglo;
+      });
+    };
 
     const obtenerTest = () => {
       fetch("http://127.0.0.1:8000/Simbolos/startTest/", {
@@ -49,6 +101,7 @@ const SimbolosTest = forwardRef(
 
           const idx = Math.floor(Math.random() * data.length);
           setPruebaActual(data[idx]);
+          setAnteriores([...anteriores, idx]);
         })
         .catch((error) => {
           console.error("Error al obtener el test", error);
@@ -70,6 +123,7 @@ const SimbolosTest = forwardRef(
           setNombres([...nombres, data.nombre]);
           setLetras([...letras, data.letra]);
           setSeleccionada([]);
+          nuevoIcono();
           setTiempoInicio(Date.now());
         });
     };
@@ -79,13 +133,14 @@ const SimbolosTest = forwardRef(
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);
+      incrementarPruebas?.();
 
       if (pruebaActual.nombre === opc.nombre) {
         onCorrect?.();
         setEstadoRespuesta("correcto");
 
-        if (!ocultas.includes(index)) {
-          setOcultas([...ocultas, index]);
+        if (!ocultas.includes(opc.nombre)) {
+          setOcultas([...ocultas, opc.nombre]);
         }
 
         if (fails.includes(opc.nombre)) {
@@ -108,9 +163,9 @@ const SimbolosTest = forwardRef(
     };
 
     useEffect(() => {
-      if (iterador < 10) {
-        const idx = Math.floor(Math.random() * game.length);
-        setPruebaActual(game[idx]);
+      if (iterador < 12) {
+        nuevoIcono();
+        setTiempoInicio(Date.now());
       } else {
         setIterador(0);
         onFinPruebas?.();
@@ -118,11 +173,13 @@ const SimbolosTest = forwardRef(
     }, [iterador]);
 
     useEffect(() => {
-      if (game.length > 0) {
-        const idx = Math.floor(Math.random() * game.length);
-        setPruebaActual(game[idx]);
+      if (iterador % 5 === 0 && iterador !== 0) {
+        setTimeout(() => {
+          const idx = Math.floor(Math.random() * (game.length - 2)) + 1;
+          moverElemento(idx, Math.random() < 0.5 ? "adelante" : "atras");
+        }, 50);
       }
-    }, [game]);
+    }, [iterador]);
 
     useImperativeHandle(ref, () => ({
       reiniciarPrueba() {
@@ -157,27 +214,31 @@ const SimbolosTest = forwardRef(
         </div>
 
         <div className="grid-options fade-in">
-          {game.map((opc, i) => (
-            <div
-              className={`option ${
-                seleccionada.includes(i) ? "seleccionada" : ""
-              }`}
-              key={i}
-              onClick={() => toggleSeleccion(opc, i)}
-            >
-              {ocultas.includes(i) ? (
-                <h3>{opc.letra}</h3>
-              ) : (
-                <>
-                  <IconoSVG
-                    url={`http://127.0.0.1:8000${opc.archivo}`}
-                    color={opc.hex}
-                  />
-                  <h3>= {opc.letra}</h3>
-                </>
-              )}
-            </div>
-          ))}
+          <AnimatePresence>
+            {game.map((opc, i) => (
+              <motion.div
+                layout="position"
+                key={opc.nombre}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                className={`option ${
+                  seleccionada.includes(i) ? "seleccionada" : ""
+                }`}
+                onClick={() => toggleSeleccion(opc, i)}
+              >
+                {ocultas.includes(opc.nombre) ? (
+                  <h3>{opc.letra}</h3>
+                ) : (
+                  <>
+                    <IconoSVG
+                      url={`http://127.0.0.1:8000${opc.archivo}`}
+                      color={opc.hex}
+                    />
+                    <h3>= {opc.letra}</h3>
+                  </>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     );

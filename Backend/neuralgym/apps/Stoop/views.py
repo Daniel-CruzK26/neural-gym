@@ -18,8 +18,6 @@ color_fondo = {
 color_letras = ['#0117f0', '#d11414', '#08b12e', '#7908b1', '#c4c120', '#f57e00']
 
 def niveles(nivel):
-    name_color = random.choice(nombres_colores)
-    objetivo, hex = random.choice(list(color_fondo.items()))
     opciones = nombres_colores
     
     random.shuffle(opciones)
@@ -39,30 +37,13 @@ def niveles(nivel):
     opc = zip(opciones, hexs, font_color)
     
     return {
-        'nombre_color': name_color,
-        'color_objetivo': objetivo,
-        'hex': hex,
+        'colores': nombres_colores,
+        'hexadecimales': color_fondo,
         'opciones': opc,
     }
     
-
-def obtenerPrueba():
-    name_color = random.choice(nombres_colores)
-    letra, hex = random.choice(list(color_fondo.items()))
-    
-    return {
-        'nombre_color': name_color,
-        'color_objetivo': letra,
-        'hex': hex,
-    }
-
 class Stoop(viewsets.GenericViewSet):
-    
-    @action(detail=False, methods=['get'])
-    def generarPrueba(self, request):
-        nueva_prueba = obtenerPrueba()
-        return Response(nueva_prueba)
-        
+
     @action(detail=False, methods=['post'])
     def getTest(self, request):
         nivel = request.data.get('nivel')

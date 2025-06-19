@@ -10,6 +10,7 @@ import SimbolosTutorial from "../components/Tutoriales/simbolosTutorial";
 export default function SimbolosPage() {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
+  const [totalPruebas, setTotalPruebas] = useState(0);
   const [incorrectas, setIncorrectas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
   const [isInstruction, setInstructions] = useState(true);
@@ -22,6 +23,7 @@ export default function SimbolosPage() {
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
   const incrementarScore = () => setScore((prev) => prev + 1);
   const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
+  const incrementarPruebas = () => setTotalPruebas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
@@ -31,6 +33,12 @@ export default function SimbolosPage() {
     if (tiempos.length === 0) return 0;
     const total = tiempos.reduce((a, b) => a + b, 0);
     return (total / tiempos.length / 1000).toFixed(2);
+  };
+
+  const precision = () => {
+    if (totalPruebas === 1) return 0;
+    const precision = (score / totalPruebas) * 100;
+    return precision.toFixed(2);
   };
 
   const pasarNivel = () => {
@@ -75,6 +83,7 @@ export default function SimbolosPage() {
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onIncorrect={respIncorrecta}
+        incrementarPruebas={incrementarPruebas}
         onFinPruebas={pasarNivel}
         isPaused={isPaused}
         isInstruction={isInstruction}
@@ -94,8 +103,8 @@ export default function SimbolosPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
+            precision={precision()}
             onContinuar={volverMenuPrincipal}
-            causa={"tiempo"}
           />
         </div>
       )}

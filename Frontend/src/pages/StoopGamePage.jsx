@@ -12,6 +12,7 @@ export default function StoopPage() {
   const [showResultados, setShowResultados] = useState(false);
   const [tiempos, setTiempos] = useState([]);
   const [nivelActual, setNivel] = useState(1);
+  const [totalPruebas, setTotalPruebas] = useState(0);
   const [racha, setRacha] = useState(0);
   const [incorrectSeguidos, setIncorrectos] = useState(0);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
@@ -19,7 +20,9 @@ export default function StoopPage() {
   const [isInstruction, setInstructions] = useState(true);
   const navigate = useNavigate();
   const stoopRef = useRef();
+
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
+  const incrementarPruebas = () => setTotalPruebas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
@@ -35,6 +38,14 @@ export default function StoopPage() {
 
   const volverMenuPrincipal = () => {
     navigate("/main-menu");
+  };
+
+  const precision = () => {
+    if (totalPruebas === 1) return 0;
+    const precision = (score / totalPruebas) * 100;
+    console.log(totalPruebas);
+    console.log(score);
+    return precision.toFixed(2);
   };
 
   const incrementarScore = () => {
@@ -107,6 +118,7 @@ export default function StoopPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
+            precision={precision()}
             onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
@@ -118,6 +130,7 @@ export default function StoopPage() {
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onIncorrect={respIncorrecta}
+        incrementarPruebas={incrementarPruebas}
         isPaused={isPaused}
         isInstruction={isInstruction}
       />
