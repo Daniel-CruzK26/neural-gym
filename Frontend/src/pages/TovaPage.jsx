@@ -9,7 +9,7 @@ import "../styles/TOVA/TovaPage.css";
 
 export default function TovaPage() {
   const [score, setScore] = useState(0);
-  const [incorrectas, setIncorrectas] = useState(0);
+  const [totalPruebas, setTotalPruebas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
@@ -19,11 +19,27 @@ export default function TovaPage() {
   const tovaRef = useRef();
 
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
-  const incrementarScore = () => setScore((prev) => prev + 1);
-  const respIncorrecta = () => setIncorrectas((prev) => prev + 1);
+
+  const incrementarScore = () => {
+    const puntaje = score;
+    setScore((prev) => prev + 1);
+
+    if (puntaje !== 0 && puntaje % 15 === 0) {
+      if (tovaRef.current) {
+        tovaRef.current.newOption();
+      }
+    }
+  };
+  const incrementarPruebas = () => setTotalPruebas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
+  };
+
+  const precision = () => {
+    if (totalPruebas === 1) return 0;
+    const precision = (score / totalPruebas) * 100;
+    return precision.toFixed(2);
   };
 
   const handlePauseToggle = () => {
@@ -44,19 +60,6 @@ export default function TovaPage() {
     return (total / tiempos.length / 1000).toFixed(2);
   };
 
-  const pasarNivel = () => {
-    if (incorrectas < 4 && tovaRef.current) {
-      tovaRef.current.newOption();
-    }
-    setIncorrectas(0);
-  };
-
-  useEffect(() => {
-    if (tovaRef.current) {
-      tovaRef.current.reiniciarPrueba();
-    }
-  }, []);
-
   return (
     <div className="app-container-stoop">
       <GameHeader
@@ -68,13 +71,12 @@ export default function TovaPage() {
         onPauseToggle={handlePauseToggle}
         onInstructionToggle={handleInstructionToggle}
       />
-      {!isInstruction && (
+      {!isInstruction && !showResultados && (
         <TovaTest
           ref={tovaRef}
           onCorrect={incrementarScore}
           onRespuestaMedida={agregarTiempoRespuesta}
-          onIncorrect={respIncorrecta}
-          onFinPruebas={pasarNivel}
+          incrementarPruebas={incrementarPruebas}
           isPaused={isPaused}
           isInstruction={isInstruction}
         />
@@ -93,8 +95,8 @@ export default function TovaPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
+            precision={precision()}
             onContinuar={volverMenuPrincipal}
-            causa={"tiempo"}
           />
         </div>
       )}

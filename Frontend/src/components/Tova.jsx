@@ -1,13 +1,25 @@
-import React, { useRef, useState, forwardRef, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+} from "react";
 import "../styles/TOVA/TovaTest.css";
 
 const TovaTest = forwardRef(
   (
-    { onCorrect, onRespuestaMedida, onIncorrect, isPaused, isInstruction },
+    {
+      onCorrect,
+      onRespuestaMedida,
+      incrementarPruebas,
+      isPaused,
+      isInstruction,
+    },
     ref
   ) => {
     const [shownNumber, setShownNumber] = useState(0);
-    const [numObj, setNumObj] = useState(0);
+    const [numObj, setNumObj] = useState([]);
     const [estadoRespuesta, setEstadoRespuesta] = useState("");
     const [show, setShow] = useState(true);
     const [tiempoInicio, setTiempoInicio] = useState(Date.now());
@@ -25,7 +37,7 @@ const TovaTest = forwardRef(
     };
 
     const evaluarRespuesta = () => {
-      const correcta = numObj !== shownNumber;
+      const correcta = !numObj.includes(shownNumber);
       return correcta;
     };
 
@@ -34,13 +46,14 @@ const TovaTest = forwardRef(
       clearTimeout(timeoutIdRef.current);
       clickPushRef.current = true;
 
+      incrementarPruebas?.();
+
       if (evaluarRespuesta()) {
         const tiempoRespuesta = Date.now() - tiempoInicio;
         onRespuestaMedida?.(tiempoRespuesta);
         onCorrect?.();
         setEstadoRespuesta("correcto");
       } else {
-        onIncorrect?.();
         setEstadoRespuesta("incorrecto");
       }
 
@@ -52,8 +65,8 @@ const TovaTest = forwardRef(
 
     const showNewNumber = () => {
       clickPushRef.current = false;
-      setTiempoInicio(Date.now());
       setShownNumber((prev) => generarRandom(prev));
+      setTiempoInicio(Date.now());
       setEstadoRespuesta("showing");
       setShow(true);
 
@@ -64,13 +77,29 @@ const TovaTest = forwardRef(
     };
 
     useEffect(() => {
-      setNumObj((prev) => generarRandom(prev));
+      const obj = generarRandom(0);
+      setNumObj([...numObj, obj]);
 
       setTimeout(() => {
         setShowObjetive(false);
         showNewNumber();
       }, 1000);
     }, []);
+
+    useImperativeHandle(ref, () => ({
+      newOption() {
+        const objAnterior = numObj;
+        const newObj = generarRandom(objAnterior);
+        setNumObj([...numObj, newObj]);
+
+        setShowObjetive(true);
+
+        setTimeout(() => {
+          setShowObjetive(false);
+          showNewNumber();
+        }, 1200);
+      },
+    }));
 
     useEffect(() => {
       if (clickPushRef.current) return;
@@ -80,9 +109,10 @@ const TovaTest = forwardRef(
           onCorrect?.();
           setEstadoRespuesta("correcto");
         } else {
-          onIncorrect?.();
           setEstadoRespuesta("incorrecto");
         }
+
+        incrementarPruebas?.();
 
         setTimeout(() => {
           setEstadoRespuesta("");
@@ -96,7 +126,9 @@ const TovaTest = forwardRef(
     return (
       <div className="tova-wrapper">
         {showObjetive ? (
-          <h1 className="num-objetive">Número objetivo: {numObj}</h1>
+          <h1 className="num-objetive">
+            Números objetivo: {numObj.join(" - ")}
+          </h1>
         ) : (
           <>
             <div className={`number-display ${estadoRespuesta}`}>

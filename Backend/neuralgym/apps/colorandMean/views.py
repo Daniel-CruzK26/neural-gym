@@ -28,7 +28,7 @@ class ColorMeanTest(viewsets.GenericViewSet):
         random.shuffle(options)
         icons_serializer = IconoSerializer(options, many=True).data #Serializamos para hacer cada uno en formato json
         
-        hexs = random.sample(list(colores.items()), 6) #Seleccionamos 6 colores aleatoriamente
+        hexs = random.sample(list(colores.items()), num_opciones) #Seleccionamos colores aleatoriamente
         random.shuffle(hexs) #Mezclamos los colores
         for icon, color in zip(icons_serializer, hexs): #A cada instancia de icono (Dict) le alegramos el campo para el color
             icon['hex'] = color[1]

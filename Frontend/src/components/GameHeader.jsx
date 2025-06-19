@@ -12,7 +12,7 @@ function GameHeader({
   isPaused,
   isInstruction,
 }) {
-  const TIEMPO_INICIAL = 30;
+  const TIEMPO_INICIAL = 60;
   const [timeLeft, setTimeLeft] = useState(TIEMPO_INICIAL);
   const timerRef = useRef(null);
 

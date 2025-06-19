@@ -4,7 +4,14 @@ import "../styles/Meaning/Meaning.css";
 
 const MeaningTest = forwardRef(
   (
-    { onCorrect, onRespuestaMedida, onIncorrect, onFinPruebas, isPaused },
+    {
+      onCorrect,
+      onRespuestaMedida,
+      onIncorrect,
+      incrementarPruebas,
+      onFinPruebas,
+      isPaused,
+    },
     ref
   ) => {
     const [pruebas, setPruebas] = useState([]);
@@ -32,10 +39,10 @@ const MeaningTest = forwardRef(
           setPruebas(data.pruebas);
           setOpciones(data.options);
           setSeleccionada([]);
-          setTiempoInicio(Date.now());
 
           if (data.pruebas.length > 0) {
             setPruebaActual(data.pruebas[0]); // 👈 agrega esta línea
+            setTiempoInicio(Date.now());
           }
         })
         .catch((error) => {
@@ -48,6 +55,8 @@ const MeaningTest = forwardRef(
       const tiempoRespuesta = Date.now() - tiempoInicio;
       onRespuestaMedida?.(tiempoRespuesta);
       setSeleccionada([index]);
+
+      incrementarPruebas?.();
 
       if (pruebaActual.objetivo === "COLOR") {
         if (opc.hex === pruebaActual.hex) {
@@ -75,6 +84,7 @@ const MeaningTest = forwardRef(
           const nuevasPruebas = pruebas.slice(1);
           setPruebas(nuevasPruebas);
           setPruebaActual(nuevasPruebas[0]);
+          setTiempoInicio(Date.now());
         } else {
           onFinPruebas?.();
         }

@@ -10,8 +10,9 @@ import "../styles/Meaning/MeaningPage.css";
 export default function MeaningPage() {
   const [score, setScore] = useState(0);
   const [incorrectas, setIncorrectas] = useState(0);
+  const [totalPruebas, setTotalPruebas] = useState(0);
   const [showResultados, setShowResultados] = useState(false);
-  const [nivelActual, setNivel] = useState(6);
+  const [nivelActual, setNivel] = useState(5);
   const [tiempos, setTiempos] = useState([]);
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -20,6 +21,7 @@ export default function MeaningPage() {
   const navigate = useNavigate();
 
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
+  const incrementarPruebas = () => setTotalPruebas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setShowResultados(true);
@@ -29,6 +31,12 @@ export default function MeaningPage() {
     if (tiempos.length === 0) return 0;
     const total = tiempos.reduce((a, b) => a + b, 0);
     return (total / tiempos.length / 1000).toFixed(2);
+  };
+
+  const precision = () => {
+    if (totalPruebas === 1) return 0;
+    const precision = (score / totalPruebas) * 100;
+    return precision.toFixed(2);
   };
 
   const incrementarScore = () => setScore((prev) => prev + 1);
@@ -72,6 +80,7 @@ export default function MeaningPage() {
         onIncorrect={respIncorrecta}
         onRespuestaMedida={agregarTiempoRespuesta}
         onFinPruebas={incrementarNivel}
+        incrementarPruebas={incrementarPruebas}
         isPaused={isPaused} // 👈 se pasa a MeaningTest
         isInstruction={isInstruction}
       />
@@ -82,6 +91,7 @@ export default function MeaningPage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
+            precision={precision()}
             onContinuar={volverMenuPrincipal}
             causa={"tiempo"}
           />
