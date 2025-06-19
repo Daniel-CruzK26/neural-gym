@@ -1,15 +1,15 @@
 import React from "react";
-import "../styles/Tutoriales/StroopTutorial.css";
+import "../styles/Tutoriales/puzzlesTutorial.css";
 
 const PuzzlesTutorial = ({ onResume }) => {
   return (
-    <div className="stroop-tutorial">
+    <div className="puzzles-tutorial">
       <h2>Instrucciones</h2>
-      <div className="stroop-tutorial-container">
+      <div className="puzzles-tutorial-container">
         <img
-          src="/stroopIns.png"
-          alt="Stroop instrucción"
-          className="stroop-example"
+          src="/puzzlesTutorial.png"
+          alt="puzzles instrucción"
+          className="puzzles-example"
         />
         <p>
           En esta prueba deberás poner atención al dibujo que aparece en la
@@ -23,7 +23,7 @@ const PuzzlesTutorial = ({ onResume }) => {
         <p>Esta prueba trabaja tu razonamiento espacial y geométrico.</p>
       </div>
 
-      <button className="stroop-btn-continuar" onClick={onResume}>
+      <button className="puzzles-btn-continuar" onClick={onResume}>
         Continuar
       </button>
     </div>

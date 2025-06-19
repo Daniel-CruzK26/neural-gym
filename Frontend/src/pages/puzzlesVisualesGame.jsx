@@ -13,6 +13,7 @@ export default function PuzzlePage() {
   const [tiempos, setTiempos] = useState([]);
   const [causaFinalizacion, setCausaFinalizacion] = useState("");
   const [resetTimerSignal, setResetTimerSignal] = useState(0);
+  const [totalPruebas, setTotalPruebas] = useState(0);
   const [isPaused, setIsPaused] = useState(false); // ✅ Estado para pausa
   const [isInstruction, setInstructions] = useState(true);
 
@@ -21,6 +22,7 @@ export default function PuzzlePage() {
 
   const incrementarScore = () => setScore((prev) => prev + 1);
   const agregarTiempoRespuesta = (ms) => setTiempos((prev) => [...prev, ms]);
+  const incrementarPruebas = () => setTotalPruebas((prev) => prev + 1);
 
   const onTimeEnd = () => {
     setCausaFinalizacion("tiempo");
@@ -34,6 +36,12 @@ export default function PuzzlePage() {
 
   const handlePauseToggle = () => {
     setIsPaused((prev) => !prev);
+  };
+
+  const precision = () => {
+    if (totalPruebas === 1) return 0;
+    const precision = (score / totalPruebas) * 100;
+    return precision.toFixed(2);
   };
 
   const handleInstructionToggle = () => {
@@ -67,6 +75,7 @@ export default function PuzzlePage() {
         onCorrect={incrementarScore}
         onRespuestaMedida={agregarTiempoRespuesta}
         onPuzzlesCompletados={onPuzzlesCompletados}
+        incrementarPruebas={incrementarPruebas}
         isPaused={isPaused}
         isInstruction={isInstruction}
       />
@@ -85,6 +94,7 @@ export default function PuzzlePage() {
           <Resultados
             puntaje={score}
             velocidad={velocidadPromedio()}
+            precision={precision()}
             onContinuar={volverMenuPrincipal}
             causa={causaFinalizacion}
           />

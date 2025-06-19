@@ -1,0 +1,87 @@
+.overlay-instruction {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.puzzles-tutorial {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: 750px;
+  height: 650px;
+  background-color: #c8eeff;
+  border-radius: 20px;
+  padding: 10px 40px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.puzzles-tutorial h2 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: #2c2c2c;
+}
+
+.puzzles-tutorial p {
+  color: #333;
+  font-size: 22px;
+  text-align: justify;
+}
+
+.puzzles-tutorial-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.puzzles-example {
+  width: 280px;
+  border-radius: 10px;
+  object-fit: contain;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.puzzles-img-container {
+  display: flex;
+  align-items: center;
+  height: 180px;
+}
+
+.puzzles-text-container {
+  height: 110px;
+}
+
+.puzzles-tutorial button {
+  padding: 4px 40px;
+  margin: 10px;
+  box-sizing: content-box;
+  font-size: 1.3rem;
+  font-weight: bold;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.3);
+  background-color: #a0c6fb;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.puzzles-tutorial button:hover {
+  background-color: #78aeea;
+  transform: scale(1.05);
+}

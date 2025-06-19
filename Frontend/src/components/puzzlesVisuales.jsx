@@ -12,6 +12,7 @@ const PuzzleVisualGame = forwardRef(
       onCorrect,
       onRespuestaMedida,
       onPuzzlesCompletados,
+      incrementarPruebas,
       isPaused,
       isInstruction,
     },
@@ -91,6 +92,7 @@ const PuzzleVisualGame = forwardRef(
       if (nuevas.length === 3) {
         const tiempoRespuesta = Date.now() - tiempoInicio;
         onRespuestaMedida?.(tiempoRespuesta);
+        incrementarPruebas?.();
 
         const seleccionadasURLs = nuevas.map((i) => mezcladas[i]);
         const esCorrecto = piezas.correctas.every((url) =>
