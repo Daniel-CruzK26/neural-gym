@@ -1,7 +1,8 @@
 # views.py
 from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.decorators import action
 import shutil
 import os
 import uuid
@@ -121,30 +122,22 @@ def generar_piezas1(img):
         piezas_guardadas["distractoras"].append(f'/media/distractoras/distract{num}.png')
     return piezas_guardadas
 
-class GenerarPuzzleAPIView(APIView):
-    def get(self, request):
-        puzzles_usados = request.session.get('puzzles_usados', [])
-        nivel = request.session.get('level', 1)
-        print(puzzles_usados)
-        print(nivel)
+class GenerarPuzzleViewSet(viewsets.GenericViewSet):
+    
+    @action(detail=False, methods=['post'])
+    def obtenerPuzzle(self, request):
+        puzzles_usados = request.data.get('puzzles_usados', [])
+        nivel = request.data.get('nivel', 1)
         
         if nivel == 1:
-            todos_puzzles = [1,2,3,4]
-        else:
+            todos_puzzles = [1,2,3,4,5,6,7,8,9]
+        elif nivel == 2 or nivel == 3:
             todos_puzzles = [1,2,3,4,5,6]
             
         puzzles_restantes = list(set(todos_puzzles) - set(puzzles_usados))
         
-        if not puzzles_restantes and nivel == 2:
-            return Response({"mensaje": "¡Ya viste todos los puzzles!"}, status=200)
-        
         if not puzzles_restantes:
-            request.session['level'] = 2
-            nivel = 2
-            request.session['puzzles_usados'] = []
-            puzzles_usados = request.session.get('puzzles_usados', [])
-            todos_puzzles = [1,2,3,4,5,6]
-            puzzles_restantes = list(set(todos_puzzles) - set(puzzles_usados))
+            return Response({'Message': 'Completados'}, content_type='application/json', status=200)
         
         number = random.choice(puzzles_restantes)
         # Cargar imagen base
@@ -161,24 +154,16 @@ class GenerarPuzzleAPIView(APIView):
         piezas["distractoras"] = [request.build_absolute_uri(p) for p in piezas["distractoras"]]
         
         # Generar la URL de la figura base
-        figura_base = static(f'puzzles{nivel}/figure{number}.png')  # ruta relativa a /static/
+        figura_base = static(f'puzzles{nivel}/figure{number}.png')
         figura_base_url = request.build_absolute_uri(figura_base)
         
-        puzzles_usados.append(number)
-        request.session['puzzles_usados'] = puzzles_usados
-        print("ID de sesión:", request.session.session_key)
-
         # Incluir la URL en la respuesta
         return Response({
             "figura_base": figura_base_url,
+            "numero_puzzle": number,
             "correctas": piezas["correctas"],
             "distractoras": piezas["distractoras"],
         })
-    
-class ReiniciarPuzzleAPIView(APIView):
-    def get(self, request):
-        request.session.pop('puzzles_usados', None)
-        request.session['level'] = 1
-        return Response({"mensaje": "Progreso reiniciado."}, status=200)
+
 
 

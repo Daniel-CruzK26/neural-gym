@@ -19,10 +19,13 @@ const PuzzleVisualGame = forwardRef(
   ) => {
     const [piezas, setPiezas] = useState({
       figura_base: "",
+      numero_puzzle: 0,
       correctas: [],
       distractoras: [],
     });
     const [seleccionadas, setSeleccionadas] = useState([]);
+    const [usados, setUsados] = useState([]);
+    const [nivel, setNivel] = useState(1);
     const [mezcladas, setMezcladas] = useState([]);
     const [tiempoInicio, setTiempoInicio] = useState(Date.now());
     const [estadoRespuesta, setEstadoRespuesta] = useState("");
@@ -31,16 +34,26 @@ const PuzzleVisualGame = forwardRef(
     const randomAngle = () => Math.floor(Math.random() * 40) - 15;
 
     const obtenerPuzzle = () => {
-      fetch("http://localhost:8000/puzzles-visuales/generar-puzzle/", {
-        method: "GET",
+      fetch("http://localhost:8000/puzzles-visuales/obtenerPuzzle/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
+        body: JSON.stringify({ puzzles_usados: usados, nivel: nivel }),
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.mensaje && data.mensaje.includes("Ya viste todos")) {
-            onPuzzlesCompletados?.();
+          if (data.Message && data.Message.includes("Completados")) {
+            if (nivel < 3) {
+              setUsados([]);
+              setNivel((prev) => prev + 1);
+            } else {
+              onPuzzlesCompletados?.();
+            }
           } else {
             setPiezas(data);
+            setUsados([...usados, data.numero_puzzle]);
             const todas = [...data.correctas, ...data.distractoras];
             setMezcladas(todas.sort(() => Math.random() - 0.5));
             const nuevasRotaciones = todas.map(() => randomAngle());
@@ -58,6 +71,10 @@ const PuzzleVisualGame = forwardRef(
     useEffect(() => {
       obtenerPuzzle();
     }, []);
+
+    useEffect(() => {
+      obtenerPuzzle();
+    }, [nivel]);
 
     const toggleSeleccion = (index) => {
       if (isPaused || isInstruction) return;
